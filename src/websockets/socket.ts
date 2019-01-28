@@ -3,6 +3,7 @@ import * as IOClient from 'socket.io-client';
 import  { Connection, Store } from '../database';
 import { OdController } from "../controller";
 import * as os from 'os';
+import {QuizController} from "../controller/quizController";
 require('dotenv').config();
 
 export class WebSocket
@@ -11,6 +12,7 @@ export class WebSocket
     private godSocket: any;
     private database: any;
     private odController: OdController;
+    private quizController: QuizController;
     private store: Store;
     private EXPIRATION_TIME = 1000 * 60;
 
@@ -21,6 +23,7 @@ export class WebSocket
         this.odSocket = new IO(server);
         this.godSocket = IOClient.connect(process.env.GOD_URL, { secure: true, reconnect: true, rejectUnauthorized : false });
         this.odController = new OdController();
+        this.quizController = new QuizController();
         this.database = Connection.getInstance();
         this.store = Store.getInstance();
 
@@ -39,6 +42,14 @@ export class WebSocket
                 this.tableClientSocket = socket.id;
                 // console.log(this.tableClientSocket);
                 socket.emit('connectClientResult', 'SUCCESS');
+            });
+
+            socket.on('getNextQuestion', () =>
+            {
+                this.quizController.findNextQuestion().then( question =>
+                {
+                    socket.emit('getNextQuestionResult', question);
+                });
             });
 
             socket.on('connectOD', (data) =>

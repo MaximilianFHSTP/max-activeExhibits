@@ -1,4 +1,5 @@
 import * as Sequelize from 'sequelize';
+import {DataFactory} from "./dataFactory";
 require('dotenv').config();
 
 export class Connection
@@ -7,6 +8,8 @@ export class Connection
     private readonly _sequelize: any;
     private _user: any;
     private _exhibit: any;
+    private _question: any;
+    private _answer: any;
 
     private constructor()
     {
@@ -18,7 +21,14 @@ export class Connection
         this.initDatabaseTables();
         this.initDatabaseRelations();
 
-        this._sequelize.sync({force: true});
+        const dataFactory = new DataFactory();
+        dataFactory.connection = this;
+
+        this._sequelize.sync({force: true}).then(() => {
+            dataFactory.createData().catch(err => {
+                console.log("Could not create data!");
+            });
+        });
     }
 
     public static getInstance(): Connection
@@ -36,10 +46,39 @@ export class Connection
         //User to Group Relation (1:n)
         this._exhibit.hasMany(this._user, {onDelete: 'cascade'});
         this._user.belongsTo(this._exhibit);
+
+        //_location to _position relation (1:n)
+        this._question.hasMany(this._answer, {foreignKey: {allowNull: true}, onDelete: 'cascade'});
+        this._answer.belongsTo(this._question);
     }
 
     private initDatabaseTables():void
     {
+        this._question = this._sequelize.define('question',
+            {
+                text: {
+                    type: Sequelize.STRING,
+                    allowNull: false
+                },
+                order: {
+                    type: Sequelize.INTEGER,
+                    allowNull: false
+                }
+            });
+
+        this._answer = this._sequelize.define('answer',
+            {
+                text: {
+                    type: Sequelize.STRING,
+                    allowNull: false
+                },
+                isCorrectAnswer: {
+                    type: Sequelize.BOOLEAN,
+                    allowNull: false,
+                    defaultValue: false
+                }
+            });
+
         this._user = this._sequelize.define('user', {
             id: {
                 type: Sequelize.STRING,
@@ -70,6 +109,11 @@ export class Connection
                 type: Sequelize.INTEGER,
                 allowNull: false,
                 unique: true
+            },
+            correctAnswerCounter: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+                defaultValue: 0
             }
         });
 
@@ -111,6 +155,14 @@ export class Connection
 
     get user(): any {
         return this._user;
+    }
+
+    get answer(): any {
+        return this._answer;
+    }
+
+    get question(): any {
+        return this._question;
     }
 
     get sequelize(): any {
