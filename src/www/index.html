@@ -17,30 +17,135 @@
         #requestUser {
             margin: 10px 20px;
         }
+
+        .progressbar {
+            width: 95%;
+            margin: 25px auto;
+            }
+            .progressbar .inner {
+            height: 15px;
+            animation: progressbar-countdown;
+            animation-duration: 40s;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+            animation-play-state: paused;
+            animation-timing-function: linear;
+        }
+
+        .progressbarhidden {
+            width: 95%;
+            margin: 25px auto;
+            }
+            .progressbarhidden .inner {
+            height: 15px;
+            animation: progressbarhidden-countdown;
+            animation-duration: 40s;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+            animation-play-state: paused;
+            animation-timing-function: linear;
+        }
+
+        .quest{
+            width: 100%;
+            text-align: center;
+        }
+        .ansA{
+            margin-left: 10%;
+        }
+        .ansB{
+            margin-left: 5%;
+        }
+        .ansC{
+            margin-left: 10%;
+        }
+        .ansD{
+            margin-left: 5%;
+        }
+        .ansLeft{
+            float: left;
+            width: 50%;
+        }
+        .ansRight{
+            float: right;
+            width: 50%;
+        }
+        .disabled{
+            display: none;
+        }
+        .enabled{
+            display: inline-block;
+        }
+        .ansSum{
+            overflow: hidden;
+        }
+        .ansSumA{
+            margin-left: 15%;
+            display: inline;
+        }
+        .ansSumB{
+            margin-left: 15%;
+            display: inline;
+        }
+        .ansSumC{
+            margin-left: 15%;
+            display: inline;
+        }
+        .ansSumD{
+            margin-left: 15%;
+            display: inline;
+        }
+
+        @keyframes progressbarhidden-countdown {
+            0% {
+                width: 100%;
+                background: #F00;
+            }
+            100% {
+                width: 0%;
+                background: #00F;
+            }
+        }
+
+        @keyframes progressbar-countdown {
+            0% {
+                width: 100%;
+                background: #0F0;
+            }
+            100% {
+                width: 0%;
+                background: #F00;
+            }
+        }
     </style>
 </head>
 <body>
 <main>
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <h1>Active Exhibit</h1>
-                <div class="table-responsive">
-                    <table id="table" class="table  table-striped">
-                        <thead>
-                            <th scope="col">UserId</th>
-                            <th scope="col">User</th>
-                            <th scope="col">Message</th>
-                            <th scope="col">Place</th>
-                            <th scope="col">Timestamp</th>
-                            <th scope="col">Kick</th>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
-                <button id="requestUser" type="button" class="btn btn-primary">requestUser</button>
+    <div style="width: 100%;overflow:auto;">
+        <div style="float:left; width: 50%;">
+            <h4 class='quest' id='question'></h4>
+            <div class='ansLeft'>
+                <div class='ansA'><span>A </span><span id='answerA'></span></div>
+                <div class='ansC'><span>C </span><span id='answerC'></span></div>
             </div>
+            <div class='ansRight'>
+                <div class='ansB'><span>B </span><span id='answerB'></span></div>
+                <div class='ansD'><span>D </span><span id='answerD'></span></div>
+            </div>
+        </div>
+        <div style="float:right; width: 50%">
+            <div id='progressbar'></div>
+            <div class='ansSum'>
+                <div class='ansSumA'><span>A </span><span id='answerSumA'></span></div>
+                <div class='ansSumB'><span>B </span><span id='answerSumB'></span></div>
+                <div class='ansSumC'><span>C </span><span id='answerSumC'></span></div>
+                <div class='ansSumD'><span>D </span><span id='answerSumD'></span></div>
+            </div>
+            </br>
+            </br>
+            <div style='margin-left: 5%; margin-right: 5%'><span id='correctAns'></span></div>
+            </br>
+            <div style='margin-left: 5%; margin-right: 5%'><span id='elaboration'></span></div>
         </div>
     </div>
 </main>
@@ -56,10 +161,41 @@
 <script>
     const socket = io.connect('http://localhost:8100');
 
+    var isInPause = false;
+
+    var answerSumA = 0;
+    var answerSumB = 0;
+    var answerSumC = 0;
+    var answerSumD = 0;
+
+    var currentQuestionID;
+
+    var correctAnswer;
+
     socket.emit('connectClient');
 
     socket.on('connectClientResult', function(data) {
         socket.emit('requestData');
+    });
+
+    socket.on('getAnswerResult', function(data) {
+        let userAnsA = data.answerA;
+        let userAnsB = data.answerB;
+        let userAnsC = data.answerC;
+        let userAnsD = data.answerD;
+
+        if(userAnsA){
+            answerSumA = answerSumA + 1;
+        }else if(userAnsB){
+            answerSumB = answerSumB + 1;
+        }else if(userAnsC){
+            answerSumC = answerSumC + 1;
+        }else if(userAnsD){
+            answerSumD = answerSumD + 1;
+        }else{
+            console.log('noAnswerUpdate');
+        }
+        updateAnswerSums();
     });
 
     socket.on('requestDataResult', function(data)
@@ -112,6 +248,124 @@
     function triggerKick(id){
         socket.emit('kickUser', id);
     }
+
+    function createProgressbar(id, duration, pause, callback) {
+        var progressbar = document.getElementById(id);
+        var durationTime = duration;
+        if(!pause){
+            progressbar.className = 'progressbar';
+        }else{
+            progressbar.className = 'progressbarhidden';
+            durationTime = '5s';
+        }
+
+        var progressbarinner = document.createElement('div');
+        progressbarinner.id = 'timerbar';
+        progressbarinner.className = 'inner';
+
+        progressbarinner.style.animationDuration = durationTime;
+
+        if (typeof(callback) === 'function') {
+            progressbarinner.addEventListener('animationend', callback);
+        }
+
+        progressbar.appendChild(progressbarinner);
+
+        progressbarinner.style.animationPlayState = 'running';
+
+        // createProgressbar(id, duration, callback);
+    }
+
+    addEventListener('load', function() {
+        answerSumA = 0;
+        answerSumB = 0;
+        answerSumC = 0;
+        answerSumD = 0;
+        socket.emit('getNextQuestion');
+        updateAnswerSums();
+        createProgressbar('progressbar', '15s', isInPause, function() {
+            isInPause = !isInPause;
+            changeQuestionAndRestartTimer();
+        });
+    });
+
+    function changeQuestionAndRestartTimer(){
+        //updateQuestions();
+        document.getElementById('timerbar').remove();
+        createProgressbar('progressbar', '15s', isInPause, function() {
+            isInPause = !isInPause;
+            if(!isInPause){
+                answerSumA = 0;
+                answerSumB = 0;
+                answerSumC = 0;
+                answerSumD = 0;
+                updateAnswerSums();
+                socket.emit('getNextQuestion');
+            }else{
+                correctAns.className = 'enabled';
+                elaboration.className = 'enabled';
+                data = {questionId: currentQuestionID, answerCountA: answerSumA, answerCountB: answerSumB, answerCountC: answerSumC, answerCountD: answerSumD}
+                socket.emit('updateAnsweredQuestions', data);
+                changeQuestionAndRestartTimer()
+            }
+        });
+    }
+
+    function updateAnswerSums(){
+        let answerSumAEl = document.getElementById('answerSumA');
+        let answerSumBEl = document.getElementById('answerSumB');
+        let answerSumCEl = document.getElementById('answerSumC');
+        let answerSumDEl = document.getElementById('answerSumD');
+
+        answerSumAEl.innerHTML = answerSumA;
+        answerSumBEl.innerHTML = answerSumB;
+        answerSumCEl.innerHTML = answerSumC;
+        answerSumDEl.innerHTML = answerSumD;
+    }
+
+    socket.on('getNextQuestionResult', function(data) {
+        currentQuestionID = data.id;
+        let question = document.getElementById('question');
+        let elaboration = document.getElementById('elaboration');
+        let correctAns = document.getElementById('correctAns');
+        let answerA = document.getElementById('answerA');
+        let answerB = document.getElementById('answerB');
+        let answerC = document.getElementById('answerC');
+        let answerD = document.getElementById('answerD');
+
+        question.innerHTML = data.text;
+        elaboration.innerHTML = data.elaboration;
+        answerA.innerHTML = data.answers[0].text;
+        answerB.innerHTML = data.answers[1].text;
+        answerC.innerHTML = data.answers[2].text;
+        answerD.innerHTML = data.answers[3].text;
+
+        if(data.answers[0].isCorrectAnswer){
+            correctAnswer = 'A';
+            correctAns.innerHTML = 'A: ' + data.answers[0].text;
+        }else if(data.answers[1].isCorrectAnswer){
+            correctAnswer = 'B';
+            correctAns.innerHTML = 'B: ' + data.answers[1].text;
+        }else if(data.answers[2].isCorrectAnswer){
+            correctAnswer = 'C';
+            correctAns.innerHTML = 'C: ' + data.answers[2].text;
+        }else if(data.answers[3].isCorrectAnswer){
+            correctAnswer = 'D';
+            correctAns.innerHTML = 'D: ' + data.answers[3].text;
+        }
+
+        correctAns.className = 'disabled';
+        elaboration.className = 'disabled';
+        const message = {question: data.text, answerA: data.answers[0].text, answerB: data.answers[1].text, answerC: data.answers[2].text, answerD: data.answers[3].text};
+        socket.emit('getQuestion', message);
+        changeQuestionAndRestartTimer();
+    });
+
+    socket.on('updateAnsweredQuestionsResult', function(data){
+        console.log('updateAnsweredQuestionResult', data);
+    });
+
+    
 
 </script>
 

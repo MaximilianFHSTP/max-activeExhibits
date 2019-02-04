@@ -63,6 +63,10 @@ export class Connection
                 order: {
                     type: Sequelize.INTEGER,
                     allowNull: false
+                },
+                elaboration: {
+                    type: Sequelize.STRING,
+                    allowNull: false
                 }
             });
 
@@ -76,6 +80,10 @@ export class Connection
                     type: Sequelize.BOOLEAN,
                     allowNull: false,
                     defaultValue: false
+                },
+                numberOfAnsweredTimes: {
+                    type: Sequelize.INTEGER,
+                    allowNull: false
                 }
             });
 

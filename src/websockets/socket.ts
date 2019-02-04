@@ -34,13 +34,14 @@ export class WebSocket
 
     private attachODListeners(): void
     {
+
         this.odSocket.on('connection', (socket) =>
         {
             socket.emit('connected', 'Client Table connected to Server!');
 
             socket.on('connectClient', () => {
                 this.tableClientSocket = socket.id;
-                // console.log(this.tableClientSocket);
+                console.log('TABLE CLIENT: ', this.tableClientSocket);
                 socket.emit('connectClientResult', 'SUCCESS');
             });
 
@@ -49,6 +50,26 @@ export class WebSocket
                 this.quizController.findNextQuestion().then( question =>
                 {
                     socket.emit('getNextQuestionResult', question);
+                });
+            });
+
+            socket.on('getQuestion', (data) =>
+            {
+                // console.log(data);
+                this.odSocket.emit('getQuestionResult', data);
+            });
+
+            
+            socket.on('sendAnswer', (data) => 
+            {
+                socket.to(this.tableClientSocket).emit('getAnswerResult', data);
+            });
+
+            socket.on('updateAnsweredQuestions', (data) =>
+            {
+                this.quizController.updateAnsweredQuestion(data).then( question =>
+                {
+                    socket.emit('updateAnsweredQuestionsResult', question);
                 });
             });
 
@@ -111,6 +132,7 @@ export class WebSocket
                     socket.to(this.tableClientSocket).emit('requestDataResult', values);
                 });
             });
+
 
             socket.on('exhibitStatusCheckResult', (user) => {
                 console.log('exhibitStatusCheckResult - User: ' + user.id);
