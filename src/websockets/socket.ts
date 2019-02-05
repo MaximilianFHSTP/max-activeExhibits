@@ -13,9 +13,8 @@ export class WebSocket
     private odController: OdController;
     private store: Store;
 
-    private projectionSocket: any;
-    private touchLeftSocket: any;
-    private touchRightSocket: any;
+    private legendGameSocket: any;
+    private touchSocket: any;
 
     constructor(server: any)
     {
@@ -35,26 +34,20 @@ export class WebSocket
         {
             socket.emit('connected', 'Client Table connected to Server!');
 
-            socket.on('connectClient', () => {
-                this.projectionSocket = socket;
-                socket.emit('connectClientResult', 'SUCCESS');
+            socket.on('connectLegendGame', () => {
+                this.legendGameSocket = socket;
+                socket.emit('connectLegendGameResult', 'SUCCESS');
             });
 
-            socket.on('connectTouch', (data) =>
+            socket.on('connectTouch', () =>
             {
-                if(data.device === 'left')
-                    this.touchLeftSocket = socket;
-
-                else
-                    this.touchRightSocket = socket;
-
+                this.touchSocket = socket;
                 socket.emit('connectTouchResult', 'SUCCESS');
             });
 
             socket.on('sendDataToProjection', (data) =>
             {
-                (this.touchLeftSocket.id === socket.id) ? data.device = 'left' : data.device = 'right';
-                this.projectionSocket.emit('updateProjection',data);
+                this.legendGameSocket.emit('updateProjection',data);
             });
         });
     }
@@ -69,14 +62,10 @@ export class WebSocket
             this.store.location = result.data;
         });
 
-        this.godSocket.on('odJoined', (result) => {
-            if(result.device === 'left')
-                this.touchLeftSocket.emit('updateUserInformation', result);
-
-            else
-                this.touchRightSocket.emit('updateUserInformation', result);
-
-            this.projectionSocket.emit('updateUserInformation', result);
+        this.godSocket.on('odJoined', (result) =>
+        {
+            this.touchSocket.emit('updateUserInformation', result);
+            this.legendGameSocket.emit('updateUserInformation', result);
         });
     }
 
