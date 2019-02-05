@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Projection Test</title>
+</head>
+<body>
+<h1>ProjectionTest</h1>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+<script>
+
+    var socket = io('http://localhost:8100/');
+
+    socket.emit('connectClient');
+
+    socket.on('connectClientResult', function (data)
+    {
+        console.log(data);
+    });
+
+    socket.on('updateProjection', function (data)
+    {
+        console.log(data);
+    });
+
+    socket.on('updateUserInformation', function (data)
+    {
+       console.log(data);
+    });
+
+</script>
+</body>
+</html>

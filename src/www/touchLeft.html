@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Touch Left Test</title>
+</head>
+<body>
+<h1>ProjectionTest</h1>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+<script>
+
+    var socket = io('http://localhost:8100/');
+
+    socket.emit('connectTouch', {device: 'left'});
+
+    socket.on('connectTouchResult', function (data)
+    {
+        console.log(data);
+
+        socket.emit('sendDataToProjection', {data: 'some thing'});
+    });
+
+</script>
+</body>
+</html>
