@@ -7,9 +7,7 @@ socket.emit('connectProjection')
 socket.on('connectProjectionResult', function (data) {
   console.log(data)
 })
-socket.on('updateProjection', function (data) {
-  console.log(data)
-})
+
 socket.on('updateUserInformation', function (data) {
   console.log(data);
 })
@@ -66,10 +64,16 @@ d3.json('data/genealogy-data.json', function (data) {
     var side = 'left'
     var personId = 27
 
-    showData(side, personId)
+    socket.on('updateProjection', function (data) {
+      console.log(data)
+      showData(data.device, data.data)
+    })
+
+    
     showData('right', 27)
 
     function showData(whichSide, whichPersonId) {
+      console.log('new Data')
       getPersonById(whichPersonId)
 
       var printedRelative
@@ -79,20 +83,17 @@ d3.json('data/genealogy-data.json', function (data) {
         if (person.id === myPerson.father) {
           printedRelative = person
           printedRelative.relation = 'father'
-          console.log('father found')
         }
 
         // check if husband in printedPerson
         if (person.id === myPerson.husband) {
           printedRelative = person
-          console.log('husband found')
           printedRelative.relation = 'husband'
         }
 
         // check if same person
         if (person.id === myPerson.id) {
           printedRelative = person
-          console.log('same person')
           printedRelative.relation = 'same'
         }
       })
@@ -103,22 +104,23 @@ d3.json('data/genealogy-data.json', function (data) {
 
       switch (whichSide) {
         case 'left':
-          console.log('left')
           myDiv = d3.select('#userLeft')
           myConnection = d3.select('#relativeLeft')
           break
         default:
-          console.log('right')
           myDiv = d3.select('#userRight')
           myConnection = d3.select('#relativeRight')
           break
       }
 
+      // remove everything which is in the divs
+      myDiv.selectAll('*').remove()
+      myConnection.selectAll('*').remove()
+
       switch (printedRelative.relation) {
         case 'father':
           if (printedRelative.side === whichSide) {
             // same side
-            console.log('same side')
             switch (printedRelative.position) {
               case 1:
                 myPositions = printedPosFather[printedRelative.position - 1]
@@ -219,7 +221,6 @@ d3.json('data/genealogy-data.json', function (data) {
             }
           } else {
             // other side
-            console.log('other side')
             switch (printedRelative.position) {
               case 1:
                 myPositions = printedPosFather[printedRelative.position - 1]
@@ -325,10 +326,8 @@ d3.json('data/genealogy-data.json', function (data) {
         default:
           if (printedRelative.side === whichSide) {
             // same side
-            console.log('same side')
             switch (whichSide) {
               case 'left':
-                console.log('show connection on left side')
                 switch (printedRelative.position) {
                   case 1:
                     myPositions = printedPosLeft[printedRelative.position - 1]
@@ -419,7 +418,6 @@ d3.json('data/genealogy-data.json', function (data) {
 
                 break
               default:
-                console.log('show connection default')
                 switch (printedRelative.position) {
                   case 1:
                     myPositions = printedPosRight[printedRelative.position - 1]
@@ -511,10 +509,8 @@ d3.json('data/genealogy-data.json', function (data) {
             }
           } else {
             // other side
-            console.log('other side')
             switch (whichSide) {
               case 'left':
-                console.log('show connection on left side')
                 switch (printedRelative.position) {
                   case 1:
                     myPositions = printedPosLeftOther[printedRelative.position - 1]
@@ -664,7 +660,6 @@ d3.json('data/genealogy-data.json', function (data) {
                 }
                 break
               default:
-                console.log('show connection default')
                 switch (printedRelative.position) {
                   case 1:
                     myPositions = printedPosRightOther[printedRelative.position - 1]
@@ -817,7 +812,6 @@ d3.json('data/genealogy-data.json', function (data) {
           }
           break
       }
-      console.log(myPositions)
 
       var map = myDiv.append('div').attr('class', 'map')
       var info = myDiv.append('div').attr('class', 'info ' + whichSide)
@@ -827,6 +821,7 @@ d3.json('data/genealogy-data.json', function (data) {
       infoDiv.append('h1').text(myPerson.name)
       infoDiv.append('p').text(getTimeString(myPerson))
 
+      
       info.append('img').attr('src', '/img/' + myPerson.img + '.png')
     }
 
