@@ -1,5 +1,6 @@
 import * as Express from 'express';
 import * as http from 'http';
+import * as path from 'path';
 import  { WebSocket } from '../websockets';
 require('dotenv').config();
 
@@ -18,14 +19,11 @@ export default class Server
         console.log('Server runs on Port: ' + process.env.SERVER_PORT);
         this.server.listen(process.env.SERVER_PORT);
 
-        this.app.get('/proj', function (req, res)
-        {
-            res.sendFile(process.env.NODE_PATH + '/projection.html');
-        });
+        this.app.use(Express.static(path.join(__dirname, '../www')));
 
-        this.app.get('/touchLeft', function (req, res)
+        this.app.get('/', function (req, res)
         {
-            res.sendFile(process.env.NODE_PATH + '/touchLeft.html');
+            res.sendFile('index.html');
         });
     }
 }
