@@ -1,0 +1,90 @@
+body{
+    background: url("img/reprodcution-v0-4-1080.png") black;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 1080px;
+    width: 1920px;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+#box{
+    display: table;
+    width: 1292px;
+    height: 100%;
+    margin: 0 314px;
+}
+
+.col{
+    display: table-cell;
+    vertical-align: top;
+}
+
+.col:nth-child(1) {
+    width: 445px;
+}
+.col:nth-child(2) {
+    width: 395px;
+    background: transparent;
+}
+.col:nth-child(3) {
+    width: 452px;
+}
+
+.map{
+    height: 385px;
+}
+
+.info{
+    height: 150px;
+    margin: 50px 10px;
+}
+.banner{
+    border: 2px solid black;
+    height: 100px;
+    float: left;
+    width: 250px;
+    margin-top: 30px;
+}
+
+.left .banner h1, .left .banner p{
+    padding-left:20px;
+}
+
+.right .banner h1, .right .banner p{
+    padding-left: 70px;
+}
+
+.right .banner{
+    margin-left: 180px;
+}
+
+.info h1{
+    font-size: 20px;
+}
+
+.info img{
+    width: 170px;
+    float: left;
+}
+
+.left img{
+    margin-left: -70px;
+}
+
+.right img{
+    margin-left: -358px;
+}
+
+.children{
+    height: 385px;
+}
+
+#relativeLeft img, #relativeRight img{
+    position: absolute;
+}
+
+.corner{
+    width: 48px;
+}
