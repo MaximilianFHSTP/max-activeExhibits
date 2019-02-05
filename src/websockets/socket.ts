@@ -62,7 +62,21 @@ export class WebSocket
             
             socket.on('sendAnswer', (data) => 
             {
-                socket.to(this.tableClientSocket).emit('getAnswerResult', data);
+                socket.broadcast.emit('getAnswerResult', data);
+            });
+
+            socket.on('updateUserAnswerTable', (data) =>{
+                this.odController.userAnsweredCorrect(data).then((user)=>
+                {
+                    console.log('updateUserAnswerTable', user.correctAnswerCounter);
+                    socket.emit('updateUserCorrectPoints', user.correctAnswerCounter);
+                })
+            });
+
+            socket.on('sendUpdateODData', (data) =>
+            {
+                const updateData = {correctAnswer: data.correctAnswer, elaboration: data.elaboration};
+                this.odSocket.emit('updateUserOD', updateData);
             });
 
             socket.on('updateAnsweredQuestions', (data) =>
@@ -97,15 +111,15 @@ export class WebSocket
             socket.on('closeConnection', (user) =>
             {
                 console.log(user);
-                this.odController.removeUser(user.id).then( (result) =>
-                {
+                /*this.odController.removeUser(user.id).then( (result) =>
+                {*/ const result = "SUCCESS";
                     socket.emit('closeConnectionResult', result);
 
                     this.odController.requestData().then( (values) =>
                     {
                         socket.to(this.tableClientSocket).emit('requestDataResult', values);
                     });
-                });
+                //});
             });
 
             socket.on('kickUser', (userId) =>
@@ -188,7 +202,7 @@ export class WebSocket
                         if(((Date.now()) - user.statusTime) > this.EXPIRATION_TIME)
                         {
                             // console.log((Date.now()) - user.statusTime + " ______ "+ this.EXPIRATION_TIME);
-                            this.odController.removeUser(user.id);
+                            // this.odController.removeUser(user.id);
                             deleteUsers.push(user);
                         }
                     }

@@ -171,6 +171,7 @@
     var currentQuestionID;
 
     var correctAnswer;
+    var elaborationText;
 
     socket.emit('connectClient');
 
@@ -304,9 +305,10 @@
             }else{
                 correctAns.className = 'enabled';
                 elaboration.className = 'enabled';
-                data = {questionId: currentQuestionID, answerCountA: answerSumA, answerCountB: answerSumB, answerCountC: answerSumC, answerCountD: answerSumD}
+                data = {questionId: currentQuestionID, answerCountA: answerSumA, answerCountB: answerSumB, answerCountC: answerSumC, answerCountD: answerSumD};
                 socket.emit('updateAnsweredQuestions', data);
-                changeQuestionAndRestartTimer()
+                sendUpdateUser();
+                changeQuestionAndRestartTimer();
             }
         });
     }
@@ -335,6 +337,7 @@
 
         question.innerHTML = data.text;
         elaboration.innerHTML = data.elaboration;
+        elaborationText = data.elaboration;
         answerA.innerHTML = data.answers[0].text;
         answerB.innerHTML = data.answers[1].text;
         answerC.innerHTML = data.answers[2].text;
@@ -363,7 +366,16 @@
 
     socket.on('updateAnsweredQuestionsResult', function(data){
         console.log('updateAnsweredQuestionResult', data);
+        //data for bars
     });
+
+    function sendUpdateUser(){
+        //send to OD when question result is shown
+        //get correct answer
+        Data = {correctAnswer: correctAnswer, elaboration: elaborationText};
+        console.log('sendUpdateODData', Data);
+        socket.emit('sendUpdateODData', Data);
+    }
 
     
 

@@ -29,7 +29,7 @@ export class QuizController {
     }
 
     public updateAnsweredQuestion(data){
-        let questionId = data.id;
+        let questionId = data.questionId;
         let questionData;
         return this._database.question.findOne({
             where: {order: questionId},

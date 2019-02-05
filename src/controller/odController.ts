@@ -85,4 +85,23 @@ export class OdController {
     public updateUserStatus(user): void {
         this.database.user.update({statusTime: Date.now()}, {where: {id: user.id}});
     }
+
+    public userAnsweredCorrect(data){
+        console.log('userAnsweredCorrect', data);
+        const isCorrect = data.correctAnswer;
+        return this.database.user.findOne({
+            where: {id: data.userId}
+        }).then((user) => {
+            console.log('userAnsweredCorrect', user);
+            if(isCorrect){
+                let corrAnswer = user.correctAnswerCounter;
+                this.database.user.update({correctAnswerCounter: corrAnswer + 1}, {where: {id: user.id}});
+            }
+            let allAnswer = user.answerCounter;
+            this.database.user.update({answerCounter: allAnswer + 1}, {where: {id: user.id}});
+            return this.database.user.findOne({
+                where: {id: data.userId}
+            })
+        });
+    }
 }

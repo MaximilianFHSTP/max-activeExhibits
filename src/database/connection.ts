@@ -116,9 +116,14 @@ export class Connection
             beacon: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
-                unique: true
+                unique: false
             },
             correctAnswerCounter: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+                defaultValue: 0
+            },
+            answerCounter: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
                 defaultValue: 0
