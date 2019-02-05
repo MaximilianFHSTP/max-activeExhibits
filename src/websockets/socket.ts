@@ -25,19 +25,19 @@ export class WebSocket
         this.database = Connection.getInstance();
         this.store = Store.getInstance();
 
-        this.attachODListeners();
+        this.attachClientListeners();
         this.attachGodListeners();
     }
 
-    private attachODListeners(): void
+    private attachClientListeners(): void
     {
         this.socketServer.on('connection', (socket) =>
         {
-            socket.emit('connected', 'Client Table connected to Server!');
+            socket.emit('connected', 'Projection connected to Server!');
 
-            socket.on('connectClient', () => {
+            socket.on('connectProjection', () => {
                 this.projectionSocket = socket;
-                socket.emit('connectClientResult', 'SUCCESS');
+                socket.emit('connectProjectionResult', 'SUCCESS');
             });
 
             socket.on('connectTouch', (data) =>

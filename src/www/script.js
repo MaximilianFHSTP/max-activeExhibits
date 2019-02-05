@@ -1,6 +1,19 @@
 'use strict'
 
-var d3
+var d3, io
+
+var socket = io('http://localhost:8100/')
+socket.emit('connectProjection')
+socket.on('connectProjectionResult', function (data) {
+  console.log(data)
+})
+socket.on('updateProjection', function (data) {
+  console.log(data)
+})
+socket.on('updateUserInformation', function (data) {
+  console.log(data);
+})
+
 
 var printedPosLeft = [
   { 'x': 443, 'y': 114 },
@@ -56,7 +69,7 @@ d3.json('data/genealogy-data.json', function (data) {
     showData(side, personId)
     showData('right', 27)
 
-    function showData (whichSide, whichPersonId) {
+    function showData(whichSide, whichPersonId) {
       getPersonById(whichPersonId)
 
       var printedRelative
@@ -820,14 +833,14 @@ d3.json('data/genealogy-data.json', function (data) {
     var myPerson
     var myId
 
-    function getPersonById (myPersonId) {
+    function getPersonById(myPersonId) {
       myId = myPersonId
       genData.forEach(person => {
         getPersonByIdRecursive(person)
       })
     }
 
-    function getPersonByIdRecursive (person) {
+    function getPersonByIdRecursive(person) {
       if (person.id === myId) {
         myPerson = person
       }
@@ -852,7 +865,7 @@ d3.json('data/genealogy-data.json', function (data) {
       }
     }
 
-    function getTimeString (myPerson) {
+    function getTimeString(myPerson) {
       var timeString = ''
 
       if (myPerson.bornGuessed) {
