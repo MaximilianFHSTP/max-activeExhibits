@@ -1,7 +1,7 @@
 import * as IO from 'socket.io';
 import * as IOClient from 'socket.io-client';
 import  { Connection, Store } from '../database';
-import { OdController } from "../controller";
+import { TouchController } from "../controller";
 import * as os from 'os';
 require('dotenv').config();
 
@@ -10,7 +10,7 @@ export class WebSocket
     private socketServer: any;
     private godSocket: any;
     private database: any;
-    private odController: OdController;
+    private touchController: TouchController;
     private store: Store;
 
     private projectionSocket: any;
@@ -21,7 +21,7 @@ export class WebSocket
     {
         this.socketServer = new IO(server);
         this.godSocket = IOClient.connect(process.env.GOD_URL, { secure: true, reconnect: true, rejectUnauthorized : false });
-        this.odController = new OdController();
+        this.touchController = new TouchController();
         this.database = Connection.getInstance();
         this.store = Store.getInstance();
 
@@ -54,7 +54,21 @@ export class WebSocket
             socket.on('sendDataToProjection', (data) =>
             {
                 (this.touchLeftSocket.id === socket.id) ? data.device = 'left' : data.device = 'right';
-                this.projectionSocket.emit('updateProjection',data);
+
+                if(this.projectionSocket)
+                    this.projectionSocket.emit('updateProjection',data);
+            });
+
+            socket.on('localUserJoined', (data) =>
+            {
+                const location = (data.device === 'left') ? this.touchController.getLeftLocationId() : this.touchController.getRightLocationId();
+                this.godSocket.emit('updateSeat', {location, occupied: true});
+            });
+
+            socket.on('localUserLeft', (data) =>
+            {
+                const location = (data.device === 'left') ? this.touchController.getLeftLocationId() : this.touchController.getRightLocationId();
+                this.godSocket.emit('updateSeatOccupied', {location, occupied: false});
             });
         });
     }
@@ -66,17 +80,31 @@ export class WebSocket
         });
 
         this.godSocket.on('loginExhibitResult', (result) => {
-            this.store.location = result.data;
+            this.touchController.updateTouchLocations(result.data);
         });
 
-        this.godSocket.on('odJoined', (result) => {
-            if(result.device === 'left')
-                this.touchLeftSocket.emit('updateUserInformation', result);
+        this.godSocket.on('odJoined', (result) =>
+        {
+            const isLeft = this.touchController.isLeftLocation(result.location.id);
+            this.touchController.updateTouchUser(result.location, result.user);
 
-            else
-                this.touchRightSocket.emit('updateUserInformation', result);
+            if(isLeft && this.touchLeftSocket)
+                this.touchLeftSocket.emit('userJoined', result.user);
 
-            this.projectionSocket.emit('updateUserInformation', result);
+            if(!isLeft && this.touchRightSocket)
+                this.touchRightSocket.emit('userJoined', result.user);
+        });
+
+        this.godSocket.on('odLeft', (result) =>
+        {
+            const isLeft = this.touchController.isLeftLocation(result.location.id);
+            this.touchController.deleteTouchUser(result.location);
+
+            if(isLeft && this.touchLeftSocket)
+                this.touchLeftSocket.emit('userLeft');
+
+            if(!isLeft && this.touchRightSocket)
+                this.touchRightSocket.emit('userLeft');
         });
     }
 
