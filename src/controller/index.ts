@@ -1,1 +1,1 @@
-export { OdController } from './odController';
+export { TouchController } from './touchController';
