@@ -55,7 +55,6 @@ export class WebSocket
 
             socket.on('getQuestion', (data) =>
             {
-                // console.log(data);
                 this.odSocket.emit('getQuestionResult', data);
             });
 
@@ -68,10 +67,17 @@ export class WebSocket
             socket.on('updateUserAnswerTable', (data) =>{
                 this.odController.userAnsweredCorrect(data).then((user)=>
                 {
-                    console.log('updateUserAnswerTable', user.correctAnswerCounter);
                     socket.emit('updateUserCorrectPoints', user.correctAnswerCounter);
                 })
             });
+
+            socket.on('updateQuizParticipationTime', (data) =>{
+                this.odController.updateParticipationTime(data);
+            })
+
+            socket.on('updateQuizAnswerTime', (data) =>{
+                this.odController.updateAnswerTime(data);
+            })
 
             socket.on('sendUpdateODData', (data) =>
             {
@@ -110,9 +116,10 @@ export class WebSocket
 
             socket.on('closeConnection', (user) =>
             {
-                console.log(user);
-                /*this.odController.removeUser(user.id).then( (result) =>
-                {*/ const result = "SUCCESS";
+                //console.log(user);
+                // this.odController.removeUser(user.id).then( (result) =>
+                // {
+                    const result = "SUCCESS";
                     socket.emit('closeConnectionResult', result);
 
                     this.odController.requestData().then( (values) =>

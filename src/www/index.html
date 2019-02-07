@@ -359,21 +359,18 @@
 
         correctAns.className = 'disabled';
         elaboration.className = 'disabled';
-        const message = {question: data.text, answerA: data.answers[0].text, answerB: data.answers[1].text, answerC: data.answers[2].text, answerD: data.answers[3].text};
+        const message = {questionId: data.id, question: data.text, answerA: data.answers[0].text, answerB: data.answers[1].text, answerC: data.answers[2].text, answerD: data.answers[3].text, correctAnswer: correctAnswer};
         socket.emit('getQuestion', message);
         changeQuestionAndRestartTimer();
     });
 
     socket.on('updateAnsweredQuestionsResult', function(data){
-        console.log('updateAnsweredQuestionResult', data);
+        // console.log('updateAnsweredQuestionResult', data);
         //data for bars
     });
 
     function sendUpdateUser(){
-        //send to OD when question result is shown
-        //get correct answer
         Data = {correctAnswer: correctAnswer, elaboration: elaborationText};
-        console.log('sendUpdateODData', Data);
         socket.emit('sendUpdateODData', Data);
     }
 

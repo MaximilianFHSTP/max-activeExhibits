@@ -87,12 +87,10 @@ export class OdController {
     }
 
     public userAnsweredCorrect(data){
-        console.log('userAnsweredCorrect', data);
         const isCorrect = data.correctAnswer;
         return this.database.user.findOne({
             where: {id: data.userId}
         }).then((user) => {
-            console.log('userAnsweredCorrect', user);
             if(isCorrect){
                 let corrAnswer = user.correctAnswerCounter;
                 this.database.user.update({correctAnswerCounter: corrAnswer + 1}, {where: {id: user.id}});
@@ -102,6 +100,50 @@ export class OdController {
             return this.database.user.findOne({
                 where: {id: data.userId}
             })
+        });
+    }
+
+    public updateParticipationTime(data){
+        return this.database.user.findOne({
+            where: {id: data.userId}
+        }).then((user) => {
+            let participationQuizTime = user.participationTime;
+            this.database.user.update({participationTime: participationQuizTime + data.participationQuizTime}, {where: {id: user.id}}).then(() => {
+                return this.database.quizsession.create({
+                        quizsessiontime: data.participationQuizTime,
+                        timestamp: Date.now(),
+                        userId: user.id
+                }).spread((quizsession, created) =>
+                {
+                    if(quizsession)
+                        return "SUCCESS";
+        
+                    else
+                        throw Error("Failed to create or find user");
+        
+                }).catch((err) => {
+                    console.log(err);
+                    return "FAILED";
+                });
+            });
+        });
+    }
+
+    public updateAnswerTime(data){
+        return this.database.user.findOne({
+            where: {id: data.userId}
+        }).then((user) => {
+            let answerTime = user.answerMeanTime;
+            let answerMeanTimeCalc = (answerTime + data.quizAnswerTime)/2;
+            this.database.user.update({answerMeanTime: answerMeanTimeCalc}, {where: {id: user.id}}).then(() => {
+                return this.database.useranswer.create({
+                    answertime: data.quizAnswerTime,
+                    timestamp: Date.now(),
+                    userId: user.id,
+                    questionId: data.questionId,
+                    correctAnswer: data.correctAnswer
+                });
+            });
         });
     }
 }

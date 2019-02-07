@@ -10,6 +10,8 @@ export class Connection
     private _exhibit: any;
     private _question: any;
     private _answer: any;
+    private _useranswers: any;
+    private _quizsessions: any;
 
     private constructor()
     {
@@ -24,7 +26,7 @@ export class Connection
         const dataFactory = new DataFactory();
         dataFactory.connection = this;
 
-        this._sequelize.sync({force: true}).then(() => {
+        this._sequelize.sync(/*{force: true}*/).then(() => {
             dataFactory.createData().catch(err => {
                 console.log("Could not create data!");
             });
@@ -46,6 +48,18 @@ export class Connection
         //User to Group Relation (1:n)
         this._exhibit.hasMany(this._user, {onDelete: 'cascade'});
         this._user.belongsTo(this._exhibit);
+
+        //User to Useranswers relation (1:n)
+        this._user.hasMany(this._useranswers, {foreignKey: {allowNull: true}, onDelete: 'cascade'});
+        this._useranswers.belongsTo(this._user);
+
+        //Answer to Useranswers relation (1:n)
+        this._question.hasMany(this._useranswers, {foreignKey: {allowNull: true}, onDelete: 'cascade'});
+        this._useranswers.belongsTo(this._question);
+
+        //User to Quizsessions relation (1:n)
+        this._user.hasMany(this._quizsessions, {foreignKey: {allowNull: true}, onDelete: 'cascade'});
+        this._quizsessions.belongsTo(this._user);
 
         //_location to _position relation (1:n)
         this._question.hasMany(this._answer, {foreignKey: {allowNull: true}, onDelete: 'cascade'});
@@ -87,6 +101,34 @@ export class Connection
                 }
             });
 
+        this._useranswers = this._sequelize.define('useranswers',
+        {
+            answertime: {
+                type: Sequelize.INTEGER,
+                allowNull: false
+            },
+            timestamp: {
+                type: Sequelize.DATE,
+                allowNull: true
+            },
+            correctAnswer: {
+                type: Sequelize.BOOLEAN,
+                allowNull: true
+            }
+        });
+
+        this._quizsessions = this._sequelize.define('quizsessions',
+        {
+            quizsessiontime: {
+                type: Sequelize.INTEGER,
+                allowNull: false
+            },
+            timestamp: {
+                type: Sequelize.DATE,
+                allowNull: true
+            }
+        });
+
         this._user = this._sequelize.define('user', {
             id: {
                 type: Sequelize.STRING,
@@ -124,6 +166,16 @@ export class Connection
                 defaultValue: 0
             },
             answerCounter: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+                defaultValue: 0
+            },
+            participationTime: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+                defaultValue: 0
+            },
+            answerMeanTime: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
                 defaultValue: 0
@@ -176,6 +228,14 @@ export class Connection
 
     get question(): any {
         return this._question;
+    }
+
+    get useranswer(): any {
+        return this._useranswers;
+    }
+
+    get quizsession(): any {
+        return this._quizsessions;
     }
 
     get sequelize(): any {
