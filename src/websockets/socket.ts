@@ -1,6 +1,6 @@
 import * as IO from 'socket.io';
 import * as IOClient from 'socket.io-client';
-import  { Connection, Store } from '../database';
+import  { Store } from '../database';
 import { TouchController } from "../controller";
 import * as os from 'os';
 require('dotenv').config();
@@ -9,7 +9,6 @@ export class WebSocket
 {
     private socketServer: any;
     private godSocket: any;
-    private database: any;
     private touchController: TouchController;
     private store: Store;
 
@@ -22,7 +21,6 @@ export class WebSocket
         this.socketServer = new IO(server);
         this.godSocket = IOClient.connect(process.env.GOD_URL, { secure: true, reconnect: true, rejectUnauthorized : false });
         this.touchController = new TouchController();
-        this.database = Connection.getInstance();
         this.store = Store.getInstance();
 
         this.attachClientListeners();
@@ -79,7 +77,8 @@ export class WebSocket
             this.loginExhibit();
         });
 
-        this.godSocket.on('loginExhibitResult', (result) => {
+        this.godSocket.on('loginExhibitResult', (result) =>
+        {
             this.touchController.updateTouchLocations(result.data);
         });
 

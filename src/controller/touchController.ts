@@ -8,7 +8,7 @@ export class TouchController
         this.store = Store.getInstance();
     }
 
-    public updateTouchUser(location, user)
+    public updateTouchUser(location: any, user: any)
     {
         if(this.isLeftLocation(location.id))
             this.store.leftTouchUser = user;
@@ -17,12 +17,12 @@ export class TouchController
             this.store.rightTouchUser = user;
     }
 
-    public isLeftLocation(checkId)
+    public isLeftLocation(checkId: any)
     {
         return checkId === this.store.leftTouchLocation.id;
     }
 
-    public deleteTouchUser(location)
+    public deleteTouchUser(location: any)
     {
         if(this.isLeftLocation(location.id))
             this.store.leftTouchUser = undefined;
@@ -31,8 +31,11 @@ export class TouchController
             this.store.rightTouchUser = undefined;
     }
 
-    public updateTouchLocations(data)
+    public updateTouchLocations(data: any)
     {
+        if(!data)
+            return;
+
         this.store.location = data.location;
         this.store.leftTouchLocation = data.leftLocation;
         this.store.rightTouchLocation = data.rightLocation;
