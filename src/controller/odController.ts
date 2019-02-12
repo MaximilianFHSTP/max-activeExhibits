@@ -113,17 +113,6 @@ export class OdController {
                         quizsessiontime: data.participationQuizTime,
                         timestamp: Date.now(),
                         userId: user.id
-                }).spread((quizsession, created) =>
-                {
-                    if(quizsession)
-                        return "SUCCESS";
-        
-                    else
-                        throw Error("Failed to create or find user");
-        
-                }).catch((err) => {
-                    console.log(err);
-                    return "FAILED";
                 });
             });
         });

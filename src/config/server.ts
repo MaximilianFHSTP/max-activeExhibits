@@ -22,6 +22,24 @@ export default class Server
         {
             res.sendFile(process.env.NODE_PATH + '/index.html');
         });
+
+        this.app.get('/assets/img/*', function(req, res, path){
+            var imgpth = req.url;
+            var img = process.env.NODE_PATH + imgpth; 
+            res.sendFile(img);
+        });
+
+        this.app.get('/assets/fonts/*', function(req, res, path){
+            var fontpth = req.url;
+            var font = process.env.NODE_PATH + fontpth; 
+            res.sendFile(font);
+        });
+
+        this.app.get('/assets/icons/*', function(req, res, path){
+            var iconpth = req.url;
+            var icon = process.env.NODE_PATH + iconpth; 
+            res.sendFile(icon);
+        });
     }
 }
 

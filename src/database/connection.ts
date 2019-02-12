@@ -70,7 +70,11 @@ export class Connection
     {
         this._question = this._sequelize.define('question',
             {
-                text: {
+                textGer: {
+                    type: Sequelize.STRING,
+                    allowNull: false
+                },
+                textEng: {
                     type: Sequelize.STRING,
                     allowNull: false
                 },
@@ -78,7 +82,15 @@ export class Connection
                     type: Sequelize.INTEGER,
                     allowNull: false
                 },
-                elaboration: {
+                content: {
+                    type: Sequelize.STRING,
+                    allowNull: false
+                },
+                elaborationGer: {
+                    type: Sequelize.STRING,
+                    allowNull: false
+                },
+                elaborationEng: {
                     type: Sequelize.STRING,
                     allowNull: false
                 }
@@ -86,7 +98,11 @@ export class Connection
 
         this._answer = this._sequelize.define('answer',
             {
-                text: {
+                textGer: {
+                    type: Sequelize.STRING,
+                    allowNull: false
+                },
+                textEng: {
                     type: Sequelize.STRING,
                     allowNull: false
                 },

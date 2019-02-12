@@ -10,8 +10,10 @@
 
     <title>MEETeUX Table</title>
     <style>
+        html, body { height: 100%;}
+
         main {
-            margin-top: 40px;
+            height: 100%;
         }
 
         #requestUser {
@@ -20,10 +22,13 @@
 
         .progressbar {
             width: 95%;
-            margin: 25px auto;
+            margin-top: -65px;
+            margin-bottom: 25px;
+            margin-left: auto;
+            margin-right: auto;
             }
             .progressbar .inner {
-            height: 15px;
+            height: 40px;
             animation: progressbar-countdown;
             animation-duration: 40s;
             animation-iteration-count: 1;
@@ -34,10 +39,13 @@
 
         .progressbarhidden {
             width: 95%;
-            margin: 25px auto;
+            margin-top: -65px;
+            margin-bottom: 25px;
+            margin-left: auto;
+            margin-right: auto;
             }
             .progressbarhidden .inner {
-            height: 15px;
+            height: 40px;
             animation: progressbarhidden-countdown;
             animation-duration: 40s;
             animation-iteration-count: 1;
@@ -48,27 +56,78 @@
 
         .quest{
             width: 100%;
+            margin-right: 15%;
             text-align: center;
+            font-family: "VollkornBold";
+            font-size: 2.3em;
+        }
+        .headquest{
+            padding: 0 10%;
         }
         .ansA{
             margin-left: 10%;
+            overflow: hidden;
         }
         .ansB{
             margin-left: 5%;
+            overflow: hidden;
         }
         .ansC{
             margin-left: 10%;
+            overflow: hidden;
         }
         .ansD{
             margin-left: 5%;
+            overflow: hidden;
         }
+
+        .answerA{
+            font-family: "OpenSansSemiBold";
+            font-size: 1.8em;
+            padding-top: 2%;
+            width: 84%;
+            float: right;
+            
+        }
+        .answerB{
+            font-family: "OpenSansSemiBold";
+            font-size: 1.8em;
+            padding-top: 2%;
+            width: 87%;
+            float: right;
+        }
+        .answerC{
+            font-family: "OpenSansSemiBold";
+            font-size: 1.8em;
+            padding-top: 2%;
+            width: 84%;
+            float: right;
+        }
+        .answerD{
+            font-family: "OpenSansSemiBold";
+            font-size: 1.8em;
+            padding-top: 2%;
+            width: 87%;
+            float: right;
+        }
+
+        .capAns{
+            font-family: 'VollkornBold';
+            font-size: 3em;
+            color: #755300;
+            width: 10%;
+            float: left;
+        }
+
         .ansLeft{
             float: left;
-            width: 50%;
+            width: 42%;
+            margin-left: 10%
         }
         .ansRight{
             float: right;
-            width: 50%;
+            width: 45%;
+            margin-right: 3%;
         }
         .disabled{
             display: none;
@@ -77,29 +136,21 @@
             display: inline-block;
         }
         .ansSum{
-            overflow: hidden;
+            padding-left: 40%;
+            margin-top: -56px;
+            color: white;
+            font-family: 'OpenSansSemiBold'
         }
-        .ansSumA{
-            margin-left: 15%;
-            display: inline;
-        }
-        .ansSumB{
-            margin-left: 15%;
-            display: inline;
-        }
-        .ansSumC{
-            margin-left: 15%;
-            display: inline;
-        }
-        .ansSumD{
-            margin-left: 15%;
-            display: inline;
+        .ansSumText{
+            padding-left: 25%;
+            color: white;
+            font-family: 'OpenSansSemiBold'
         }
 
         @keyframes progressbarhidden-countdown {
             0% {
                 width: 100%;
-                background: #F00;
+                background: #00F;
             }
             100% {
                 width: 0%;
@@ -110,42 +161,302 @@
         @keyframes progressbar-countdown {
             0% {
                 width: 100%;
-                background: #0F0;
+                background: #906e1b;
             }
             100% {
                 width: 0%;
-                background: #F00;
+                background: #906e1b;
             }
         }
+
+        .contentContainer{
+            margin-top: 2%;
+            margin-left: 25%;
+            margin-bottom: 2%;
+            width: 450px;
+            height: 500px;
+        }
+
+        .screenLeft{
+            padding-top: 2%;
+            float:left; 
+            width: 49%;
+        }
+
+        .screenRight{
+            padding: 20px;
+            float:right; 
+            width: 49.2%;
+            height: 100%; 
+            background-color: #d3c5a4;
+        }
+
+        .progressbarWhiteback{
+            outline: solid 5px #755300;
+            width: 95%;
+            height: 40px;
+            margin: 25px auto;
+            background: white;
+        }
+
+        .bottominfo{
+            height: 70px;
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            background-color: #755300;
+        }
+
+        .infoleft{
+            color: white;
+            float:left;
+            width:50%;
+            margin-top: 15px;
+            margin-left: 50px;
+            font-family: "OpenSansRegular";
+            font-size: 1.5em;
+        }
+
+        .inforight{
+            position: relative;
+            color: white;
+            float:right;
+            margin-top: 15px;
+            margin-right: 65px;
+            font-family: "OpenSansRegular";
+            font-size: 1.5em;
+        }
+
+        .bottomicon{
+            position: absolute;
+            bottom: 0;
+            left: 42.9%;
+        }
+
+        .screenDivider{
+            width: 1.8%;
+            height: 100%; 
+            float: left;
+            background-color: #755300;
+        }
+
+        @font-face {
+            font-family: "OpenSansRegular";
+            src:url("assets/fonts/OpenSans-Regular.ttf");
+        }
+
+        @font-face {
+            font-family: "OpenSansBold";
+            src:url("assets/fonts/OpenSans-Bold.ttf");
+        }
+
+        @font-face {
+            font-family: "OpenSansSemiBold";
+            src:url("assets/fonts/OpenSans-SemiBold.ttf");
+        }
+
+        @font-face {
+            font-family: "VollkornRegular";
+            src:url("assets/fonts/Vollkorn-Regular.ttf");
+        }
+
+        @font-face {
+            font-family: "VollkornBold";
+            src:url("assets/fonts/Vollkorn-Bold.ttf");
+        }
+
+        @font-face {
+            font-family: "VollkornSemiBold";
+            src:url("assets/fonts/Vollkorn-SemiBold.ttf");
+        }
+
+        .bars{
+            margin-bottom: 5%;
+            height: 50%;
+        }
+        
+        .whitebars{
+            margin-left: 10%;
+            width: 90%;
+            overflow: hidden;
+        }
+
+        .barA{
+            height: 428px;
+            width: 150px;
+            margin-right: 3%;
+            float: left;
+            position: relative;
+        }
+
+        .barB{
+            height: 428px;
+            width: 150px;
+            margin-right: 3%;
+            float: left;
+            position: relative;
+        }
+
+        .barC{
+            height: 428px;
+            width: 150px;
+            margin-right: 3%;
+            float: left;
+            position: relative;
+        }
+
+        .barD{
+            height: 428px;
+            width: 150px;
+            margin-right: 3%;
+            float: left;
+            position: relative;
+        }
+
+        .whitebar{
+            background-color: white;
+            height: 360px;
+            width: 110px;
+            margin: 0 auto;
+        }
+
+        .corAns{
+            font-family: 'OpenSansSemiBold';
+            font-size: 2em;
+            text-align: center;
+        }
+        .elab{
+            margin-left: 10%; 
+            margin-right: 10%;
+            font-family: 'OpenSansSemiBold';
+            font-size: 1.4em;
+        }
+
+        .answerBoard{
+            height: 60px;
+            width: 150px;
+            background-color: #755300;
+            margin-top: -270px;
+        }
+
+        .barSocket{
+            height: 60px;
+            width: 150px;
+            background-color: white;
+        }
+
+        .lineSocket{
+            height: 8px;
+            width: 150px;
+            background-color: #906e1b;
+            margin-top: 218px;
+        }
+
+        .fontSocket{
+            color: #755300;
+            font-size: 3em;
+            font-family: 'VollkornBold';
+            margin-top: -62px;
+            margin-left: 38%;
+        }
+
+        .startBarLine{
+            height: 20px;
+            width: 86.9%;
+            background-color: #906e1b;
+            margin-top: 20px;
+            margin-left: 2.75%;
+        }
+
+        .endBarLine{
+            height: 20px;
+            width: 92.4%;
+            background-color: #906e1b;
+            margin-top: 428px;
+        }
+
+        .solution{
+            margin-top: 8%;
+        }
+
+        /*circle {
+        fill: orange;
+        }*/
     </style>
 </head>
 <body>
 <main>
-    <div style="width: 100%;overflow:auto;">
-        <div style="float:left; width: 50%;">
-            <h4 class='quest' id='question'></h4>
+    <div style="width: 100%; height: 100%; overflow:auto;">
+        <div class='screenLeft'>
+            <div class='headquest'><h4 class='quest' id='question'></h4></div>
+            <div id='contentImage' class='contentContainer'></div>
             <div class='ansLeft'>
-                <div class='ansA'><span>A </span><span id='answerA'></span></div>
-                <div class='ansC'><span>C </span><span id='answerC'></span></div>
+                <div class='ansA' id='ansABlock'><div class='capAns'>A </div><div class='answerA' id='answerA'></div></div>
+                <div class='ansC' id='ansCBlock'><div class='capAns'>C </div><div class='answerC' id='answerC'></div></div>
             </div>
             <div class='ansRight'>
-                <div class='ansB'><span>B </span><span id='answerB'></span></div>
-                <div class='ansD'><span>D </span><span id='answerD'></span></div>
+                <div class='ansB' id='ansBBlock'><div class='capAns'>B </div><div class='answerB' id='answerB'></div></div>
+                <div class='ansD' id='ansDBlock'><div class='capAns'>D </div><div class='answerD' id='answerD'></div></div>
             </div>
         </div>
-        <div style="float:right; width: 50%">
+        <div class='screenDivider'>
+
+        </div>
+        <div class='screenRight'>
+            <div class='progressbarWhiteback'></div>
             <div id='progressbar'></div>
-            <div class='ansSum'>
-                <div class='ansSumA'><span>A </span><span id='answerSumA'></span></div>
-                <div class='ansSumB'><span>B </span><span id='answerSumB'></span></div>
-                <div class='ansSumC'><span>C </span><span id='answerSumC'></span></div>
-                <div class='ansSumD'><span>D </span><span id='answerSumD'></span></div>
+            
+            <div class='bars'>
+                <div class='whitebars'>
+                    <div class='startBarLine'></div>
+                    <div class='barA'>
+                        <div class='whitebar'></div>
+                        <div class='answerBoard'></div>
+                        <div class='ansSum' id='answerSumA'></div>
+                        <div class='ansSumText'>Antworten</div>
+                        <div class='lineSocket'></div>
+                        <div class='barSocket'></div>
+                        <div class='fontSocket'>A</div>
+                    </div>
+                    <div class='barB'>
+                        <div class='whitebar'></div>
+                        <div class='answerBoard'></div>
+                        <div class='ansSum' id='answerSumB'></div>
+                        <div class='ansSumText'>Antworten</div>
+                        <div class='lineSocket'></div>
+                        <div class='barSocket'></div>
+                        <div class='fontSocket'>B</div>
+                    </div>
+                    <div class='barC'>
+                        <div class='whitebar'></div>
+                        <div class='answerBoard'></div>
+                        <div class='ansSum' id='answerSumC'></div>
+                        <div class='ansSumText'>Antworten</div>
+                        <div class='lineSocket'></div>
+                        <div class='barSocket'></div>
+                        <div class='fontSocket'>C</div>
+                    </div>
+                    <div class='barD'>
+                        <div class='whitebar'></div>
+                        <div class='answerBoard'></div>
+                        <div class='ansSum' id='answerSumD'></div>
+                        <div class='ansSumText'>Antworten</div>
+                        <div class='lineSocket'></div>
+                        <div class='barSocket'></div>
+                        <div class='fontSocket'>D</div>
+                    </div>
+                    <div class='endBarLine'></div>
+                </div>
             </div>
-            </br>
-            </br>
-            <div style='margin-left: 5%; margin-right: 5%'><span id='correctAns'></span></div>
-            </br>
-            <div style='margin-left: 5%; margin-right: 5%'><span id='elaboration'></span></div>
+            <div class='solution'>
+                <div class='corAns'><span id='correctAns'></span></div>
+                <div class='elab'><span id='elaboration'></span></div>
+            </div>
+        </div>
+        <div class='bottominfo'>
+            <div class='infoleft'>Bitte App oder stationäres Tablet zur Teilnahme verwenden!</div>
+            <div class='bottomicon' id='bottomicon'></div>
+            <div class='inforight'>Use your smartphone or the stationary tablet to participate!</div>
         </div>
     </div>
 </main>
@@ -157,9 +468,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.2/d3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
 <script>
     const socket = io.connect('http://localhost:8100');
+
+    var contentPic;
 
     var isInPause = false;
 
@@ -171,7 +486,7 @@
     var currentQuestionID;
 
     var correctAnswer;
-    var elaborationText;
+    var elaborationTextGer;
 
     socket.emit('connectClient');
 
@@ -198,43 +513,6 @@
         }
         updateAnswerSums();
     });
-
-    socket.on('requestDataResult', function(data)
-    {
-        // console.log(data);
-        //removing all content rows
-        $("#table tbody tr").remove();
-
-        for(let user of data.users)
-        {
-            let tr = $("<tr>");
-            let tdUserid = $("<td>").appendTo(tr);
-            $("<span>").text(user.id).appendTo(tdUserid);
-
-            let tdUserName = $("<td>").appendTo(tr);
-            $("<span>").text(user.name).appendTo(tdUserName);
-
-            let tdUserMessage = $("<td>").appendTo(tr);
-            $("<span>").text(user.message).appendTo(tdUserMessage);
-
-            let tdUserSeat = $("<td>").appendTo(tr);
-            $("<span>").text(user.location).appendTo(tdUserSeat);
-
-            let tdUserTime = $("<td>").appendTo(tr);
-            let time = new Date(user.statusTime);
-            $("<span>").text(time.getHours()+":"+time.getMinutes()+":"+time.getSeconds()).appendTo(tdUserTime);
-
-            let tdUserKick = $("<td>").appendTo(tr);
-            let kickButton = $("<button>").attr("value", user.id).attr("class", "btn btn-primary").text("Kick " + user.name);
-            kickButton.appendTo(tdUserKick);
-            kickButton.click(function(){
-                triggerKick($( this ).attr("value"));
-            });
-
-            tr.appendTo($("#table"));
-        }
-    });
-
 
     const requestUserButton = $("#requestUser");
 
@@ -282,6 +560,13 @@
         answerSumB = 0;
         answerSumC = 0;
         answerSumD = 0;
+
+        let bottomContainer = document.getElementById('bottomicon');
+        var bottomImg = document.createElement("IMG");
+        bottomImg.src = '/assets/icons/circle-icon-cut.png';
+        bottomImg.style.height = '160px';
+        bottomContainer.appendChild(bottomImg);
+
         socket.emit('getNextQuestion');
         updateAnswerSums();
         createProgressbar('progressbar', '15s', isInPause, function() {
@@ -301,10 +586,35 @@
                 answerSumC = 0;
                 answerSumD = 0;
                 updateAnswerSums();
+                // document.getElementById('contentImg').remove();
                 socket.emit('getNextQuestion');
             }else{
                 correctAns.className = 'enabled';
                 elaboration.className = 'enabled';
+
+                let answerABlock = document.getElementById('ansABlock');
+                let answerBBlock = document.getElementById('ansBBlock');
+                let answerCBlock = document.getElementById('ansCBlock');
+                let answerDBlock = document.getElementById('ansDBlock');
+
+                if(correctAnswer==='A'){
+                    answerBBlock.style.opacity = 0.5;
+                    answerCBlock.style.opacity = 0.5;
+                    answerDBlock.style.opacity = 0.5;
+                }else if(correctAnswer==='B'){
+                    answerABlock.style.opacity = 0.5;
+                    answerCBlock.style.opacity = 0.5;
+                    answerDBlock.style.opacity = 0.5;
+                }else if(correctAnswer==='C'){
+                    answerABlock.style.opacity = 0.5;
+                    answerBBlock.style.opacity = 0.5;
+                    answerDBlock.style.opacity = 0.5;
+                }else if(correctAnswer==='D'){
+                    answerABlock.style.opacity = 0.5;
+                    answerBBlock.style.opacity = 0.5;
+                    answerCBlock.style.opacity = 0.5;
+                }
+
                 data = {questionId: currentQuestionID, answerCountA: answerSumA, answerCountB: answerSumB, answerCountC: answerSumC, answerCountD: answerSumD};
                 socket.emit('updateAnsweredQuestions', data);
                 sendUpdateUser();
@@ -319,13 +629,14 @@
         let answerSumCEl = document.getElementById('answerSumC');
         let answerSumDEl = document.getElementById('answerSumD');
 
-        answerSumAEl.innerHTML = answerSumA;
-        answerSumBEl.innerHTML = answerSumB;
-        answerSumCEl.innerHTML = answerSumC;
-        answerSumDEl.innerHTML = answerSumD;
+        answerSumAEl.innerHTML = '+ '+answerSumA;
+        answerSumBEl.innerHTML = '+ '+answerSumB;
+        answerSumCEl.innerHTML = '+ '+answerSumC;
+        answerSumDEl.innerHTML = '+ '+answerSumD;
     }
 
     socket.on('getNextQuestionResult', function(data) {
+        console.log('getNextQuestionResult', data)
         currentQuestionID = data.id;
         let question = document.getElementById('question');
         let elaboration = document.getElementById('elaboration');
@@ -335,31 +646,46 @@
         let answerC = document.getElementById('answerC');
         let answerD = document.getElementById('answerD');
 
-        question.innerHTML = data.text;
-        elaboration.innerHTML = data.elaboration;
-        elaborationText = data.elaboration;
-        answerA.innerHTML = data.answers[0].text;
-        answerB.innerHTML = data.answers[1].text;
-        answerC.innerHTML = data.answers[2].text;
-        answerD.innerHTML = data.answers[3].text;
+        question.innerHTML = data.textGer;
+        elaboration.innerHTML = data.elaborationGer;
+        elaborationTextGer = data.elaborationGer;
+        var contentContainer = document.getElementById('contentImage');
+        const contentUrl = data.content;
+        contentContainer.style.backgroundImage = "url("+contentUrl+")";
+        contentContainer.style.backgroundSize = "contain";
+
+        answerA.innerHTML = data.answers[0].textGer;
+        answerB.innerHTML = data.answers[1].textGer;
+        answerC.innerHTML = data.answers[2].textGer;
+        answerD.innerHTML = data.answers[3].textGer;
+
+        let answerABlock = document.getElementById('ansABlock');
+        let answerBBlock = document.getElementById('ansBBlock');
+        let answerCBlock = document.getElementById('ansCBlock');
+        let answerDBlock = document.getElementById('ansDBlock');
+
+        answerABlock.style.opacity = 1;
+        answerBBlock.style.opacity = 1;
+        answerCBlock.style.opacity = 1;
+        answerDBlock.style.opacity = 1;
 
         if(data.answers[0].isCorrectAnswer){
             correctAnswer = 'A';
-            correctAns.innerHTML = 'A: ' + data.answers[0].text;
+            correctAns.innerHTML = 'Richtige Antwort: A';
         }else if(data.answers[1].isCorrectAnswer){
             correctAnswer = 'B';
-            correctAns.innerHTML = 'B: ' + data.answers[1].text;
+            correctAns.innerHTML = 'Richtige Antwort: B';
         }else if(data.answers[2].isCorrectAnswer){
             correctAnswer = 'C';
-            correctAns.innerHTML = 'C: ' + data.answers[2].text;
+            correctAns.innerHTML = 'Richtige Antwort: C';
         }else if(data.answers[3].isCorrectAnswer){
             correctAnswer = 'D';
-            correctAns.innerHTML = 'D: ' + data.answers[3].text;
+            correctAns.innerHTML = 'Richtige Antwort: D';
         }
 
         correctAns.className = 'disabled';
         elaboration.className = 'disabled';
-        const message = {questionId: data.id, question: data.text, answerA: data.answers[0].text, answerB: data.answers[1].text, answerC: data.answers[2].text, answerD: data.answers[3].text, correctAnswer: correctAnswer};
+        const message = {questionId: data.id, question: data.textGer, answerA: data.answers[0].textGer, answerB: data.answers[1].textGer, answerC: data.answers[2].textGer, answerD: data.answers[3].textGer, correctAnswer: correctAnswer};
         socket.emit('getQuestion', message);
         changeQuestionAndRestartTimer();
     });
@@ -370,13 +696,45 @@
     });
 
     function sendUpdateUser(){
-        Data = {correctAnswer: correctAnswer, elaboration: elaborationText};
+        Data = {correctAnswer: correctAnswer, elaboration: elaborationTextGer};
         socket.emit('sendUpdateODData', Data);
     }
 
     
+    //Balls
+    /*var width = 300, height = 300
+    var nodes = [{}, {}, {}, {}, {}]
+    var xCenter = [500, 500, 500]
 
+    var simulation = d3.forceSimulation(nodes)
+    .force('charge', d3.forceManyBody())
+    simulation.force('x', d3.forceX().x(function(d) {
+        return xCenter[d.category];
+    }))
+    .force('collision', d3.forceCollide().radius(function(d) {
+        return d.radius;
+    }))
+    .on('tick', ticked);
+
+    function ticked() {
+    var u = d3.select('svg')
+        .selectAll('circle')
+        .data(nodes)
+
+    u.enter()
+        .append('circle')
+        .attr('r', 5)
+        .merge(u)
+        .attr('cx', function(d) {
+        return d.x
+        })
+        .attr('cy', function(d) {
+        return d.y
+        })
+
+    u.exit().remove()
+    }*/
+   
 </script>
-
 </body>
 </html>
