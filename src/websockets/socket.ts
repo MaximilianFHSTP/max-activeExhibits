@@ -59,14 +59,18 @@ export class WebSocket
 
             socket.on('localUserJoined', (data) =>
             {
-                const location = (data.device === 'left') ? this.touchController.getLeftLocationId() : this.touchController.getRightLocationId();
-                this.godSocket.emit('updateSeat', {location, occupied: true});
+                console.log('local user joined')
+                console.log(data)
+                // const location = (data.device === 'left') ? this.touchController.getLeftLocationId() : this.touchController.getRightLocationId();
+                // this.godSocket.emit('updateSeat', {location, occupied: true});
             });
 
             socket.on('localUserLeft', (data) =>
             {
-                const location = (data.device === 'left') ? this.touchController.getLeftLocationId() : this.touchController.getRightLocationId();
-                this.godSocket.emit('updateSeatOccupied', {location, occupied: false});
+                console.log('local user left')
+                console.log('data')
+                // const location = (data.device === 'left') ? this.touchController.getLeftLocationId() : this.touchController.getRightLocationId();
+                // this.godSocket.emit('updateSeatOccupied', {location, occupied: false});
             });
         });
     }
