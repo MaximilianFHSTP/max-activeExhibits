@@ -118,6 +118,7 @@ export class WebSocket
         this.godSocket.on('loginExhibitResult', (result) =>
         {
             this.touchController.updateTouchLocations(result.data);
+            console.log("---------------- Connected to GoD ----------------");
         });
 
         /**
@@ -170,6 +171,13 @@ export class WebSocket
               address = iface.address;
             });
           });
+
+        if(process.env.BYPASS_IP_ADDRESS)
+        {
+            console.log('Bypass-IP-Adresse: ' + address);
+            this.godSocket.emit('loginExhibit', process.env.BYPASS_IP_ADDRESS);
+            return;
+        }
 
         if(address)
         {

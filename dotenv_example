@@ -1,4 +1,5 @@
 #Rename File in .env
 SERVER_PORT = 8100
 IP_ADDRESS = 0.0.0.0
+BYPASS_IP_ADDRESS = 0.0.0.0
 GOD_URL = https://god.domain:3000
