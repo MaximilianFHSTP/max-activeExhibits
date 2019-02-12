@@ -36,9 +36,21 @@ export class TouchController
         if(!data)
             return;
 
-        this.store.location = data.location;
-        this.store.leftTouchLocation = data.leftLocation;
-        this.store.rightTouchLocation = data.rightLocation;
+        this.store.location = data.exhibit;
+
+        for(let child of data.childLocations)
+        {
+            if(child.locationTag === 'left')
+                this.store.leftTouchLocation = child;
+
+            else if(child.locationTag === 'right')
+                this.store.rightTouchLocation = child;
+        }
+    }
+
+    public getLocationId()
+    {
+        return this.store.location.id;
     }
 
     public getLeftLocationId()

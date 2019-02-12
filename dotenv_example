@@ -1,4 +1,5 @@
 #Rename File in .env
-NODE_PATH = C:/Niklas/Code/meeteux-table
-SERVER_PORT = 3000
+SERVER_PORT = 8100
+IP_ADDRESS = 0.0.0.0
+BYPASS_IP_ADDRESS = 0.0.0.0
 GOD_URL = https://god.domain:3000
