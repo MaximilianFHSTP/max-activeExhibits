@@ -24,11 +24,11 @@ export class DataFactory {
                 this._connection.question.create({
                     id: 1,
                     textGer: 'In welchem Sternzeichen war Maximilian I. geboren?',
-                    textEng: 'In welchem Sternzeichen war Maximilian I. geboren?',
+                    textEng: 'English In welchem Sternzeichen war Maximilian I. geboren?',
                     order: 1,
                     content: "assets/img/WK_13.jpg",
                     elaborationGer: 'Maximilian wurde am 22. März 1459 geboren. Es wird außerdem von einem Kometen berichtet, der zu Maximilians Geburt am Himmel sichtbar gewesen sein soll. Kometen wurden im Spätmittelalter und der Frühen Neuzeit als Vorzeichen betrachtet.',
-                    elaborationEng: 'Maximilian wurde am 22. März 1459 geboren. Es wird außerdem von einem Kometen berichtet, der zu Maximilians Geburt am Himmel sichtbar gewesen sein soll. Kometen wurden im Spätmittelalter und der Frühen Neuzeit als Vorzeichen betrachtet.'
+                    elaborationEng: 'English Maximilian wurde am 22. März 1459 geboren. Es wird außerdem von einem Kometen berichtet, der zu Maximilians Geburt am Himmel sichtbar gewesen sein soll. Kometen wurden im Spätmittelalter und der Frühen Neuzeit als Vorzeichen betrachtet.'
                 }),
                 this._connection.question.create({
                     id: 2,
@@ -177,7 +177,7 @@ export class DataFactory {
                     questionId: 1,
                     isCorrectAnswer: false,
                     textGer: 'Steinbock',
-                    textEng: 'Steinbock',
+                    textEng: 'ESteinbock',
                     numberOfAnsweredTimes: 0
                 }),
                 this._connection.answer.create({
@@ -185,7 +185,7 @@ export class DataFactory {
                     questionId: 1,
                     isCorrectAnswer: false,
                     textGer: 'Löwe',
-                    textEng: 'Löwe',
+                    textEng: 'ELöwe',
                     numberOfAnsweredTimes: 0
                 }),
                 this._connection.answer.create({
@@ -193,7 +193,7 @@ export class DataFactory {
                     questionId: 1,
                     isCorrectAnswer: true,
                     textGer: 'Widder',
-                    textEng: 'Widder',
+                    textEng: 'EWidder',
                     numberOfAnsweredTimes: 0
                 }),
                 this._connection.answer.create({
@@ -201,7 +201,7 @@ export class DataFactory {
                     questionId: 1,
                     isCorrectAnswer: false,
                     textGer: 'Stier',
-                    textEng: 'Stier',
+                    textEng: 'EStier',
                     numberOfAnsweredTimes: 0
                 }),
                 this._connection.answer.create({

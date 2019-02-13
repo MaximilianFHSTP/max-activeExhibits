@@ -81,7 +81,7 @@ export class WebSocket
 
             socket.on('sendUpdateODData', (data) =>
             {
-                const updateData = {correctAnswer: data.correctAnswer, elaboration: data.elaboration};
+                const updateData = {correctAnswer: data.correctAnswer, elaborationGer: data.elaborationGer, elaborationEng: data.elaborationEng};
                 this.odSocket.emit('updateUserOD', updateData);
             });
 

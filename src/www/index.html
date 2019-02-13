@@ -230,7 +230,7 @@
         .bottomicon{
             position: absolute;
             bottom: 0;
-            left: 42.9%;
+            left: 43.5%;
         }
 
         .screenDivider{
@@ -487,6 +487,7 @@
 
     var correctAnswer;
     var elaborationTextGer;
+    var elaborationTextEng;
 
     socket.emit('connectClient');
 
@@ -649,6 +650,7 @@
         question.innerHTML = data.textGer;
         elaboration.innerHTML = data.elaborationGer;
         elaborationTextGer = data.elaborationGer;
+        elaborationTextEng = data.elaborationEng;
         var contentContainer = document.getElementById('contentImage');
         const contentUrl = data.content;
         contentContainer.style.backgroundImage = "url("+contentUrl+")";
@@ -685,7 +687,8 @@
 
         correctAns.className = 'disabled';
         elaboration.className = 'disabled';
-        const message = {questionId: data.id, question: data.textGer, answerA: data.answers[0].textGer, answerB: data.answers[1].textGer, answerC: data.answers[2].textGer, answerD: data.answers[3].textGer, correctAnswer: correctAnswer};
+        const message = {questionId: data.id, questionGer: data.textGer, answerAGer: data.answers[0].textGer, answerBGer: data.answers[1].textGer, answerCGer: data.answers[2].textGer, answerDGer: data.answers[3].textGer, 
+            questionEng: data.textGer, answerAEng: data.answers[0].textEng, answerBEng: data.answers[1].textEng, answerCEng: data.answers[2].textEng, answerDEng: data.answers[3].textEng, correctAnswer: correctAnswer};
         socket.emit('getQuestion', message);
         changeQuestionAndRestartTimer();
     });
@@ -696,7 +699,7 @@
     });
 
     function sendUpdateUser(){
-        Data = {correctAnswer: correctAnswer, elaboration: elaborationTextGer};
+        Data = {correctAnswer: correctAnswer, elaborationGer: elaborationTextGer, elaborationEng: elaborationTextEng};
         socket.emit('sendUpdateODData', Data);
     }
 
