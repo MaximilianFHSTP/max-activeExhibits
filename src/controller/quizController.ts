@@ -28,7 +28,7 @@ export class QuizController {
         });
     }
 
-    public updateAnsweredQuestion(data){
+    public async updateAnsweredQuestion(data): Promise<any> {
         let questionId = data.questionId;
         let questionData;
         return this._database.question.findOne({
@@ -36,54 +36,75 @@ export class QuizController {
             include: [{
                 model: this._database.answer
             }]
-        }).then(question =>
+        }).then(async question =>
         {
-            questionData = question;
+            questionData = await question;
             let answerIdA = questionData.answers[0].id
             return this._database.answer.findOne({
                 where: {id: answerIdA}
-            }).then(answerA =>
+            }).then(async answerA =>
             {
-                answerA.update({numberOfAnsweredTimes: answerA.numberOfAnsweredTimes + data.answerCountA}).then(() =>
+                return await answerA.update({numberOfAnsweredTimes: answerA.numberOfAnsweredTimes + data.answerCountA}).then(() =>
                 {
                     let answerIdB = questionData.answers[1].id
                     return this._database.answer.findOne({
                         where: {id: answerIdB}
-                    }).then(answerB =>
+                    }).then(async answerB =>
                     {
-                        answerB.update({numberOfAnsweredTimes: answerB.numberOfAnsweredTimes + data.answerCountB}).then(() =>
+                        return await answerB.update({numberOfAnsweredTimes: answerB.numberOfAnsweredTimes + data.answerCountB}).then(() =>
                         {
                             let answerIdC = questionData.answers[2].id
                             return this._database.answer.findOne({
                                 where: {id: answerIdC}
-                            }).then(answerC =>
+                            }).then(async answerC =>
                             {
-                                answerC.update({numberOfAnsweredTimes: answerC.numberOfAnsweredTimes + data.answerCountC}).then(() =>
+                                return await answerC.update({numberOfAnsweredTimes: answerC.numberOfAnsweredTimes + data.answerCountC}).then(() =>
                                 {
                                     let answerIdD = questionData.answers[3].id
                                     return this._database.answer.findOne({
                                         where: {id: answerIdD}
-                                    }).then(answerD =>
+                                    }).then(async answerD =>
                                     {
-                                        answerD.update({numberOfAnsweredTimes: answerD.numberOfAnsweredTimes + data.answerCountD}).then(() =>
+                                        return await answerD.update({numberOfAnsweredTimes: answerD.numberOfAnsweredTimes + data.answerCountD}).then(() =>
                                         {
                                             return this._database.question.findOne({
                                                 where: {order: questionId},
                                                 include: [{
                                                     model: this._database.answer
                                                 }]
-                                            }).then(question =>
+                                            }).then(async (question) =>
                                             {
-                                                return question;
+                                                let updatedQuestion = await question;
+                                                return updatedQuestion;
+                                            }).catch(err => {
+                                                console.log(err);
                                             });
-                                        });
-                                    });
-                                });
-                            });
-                        });
-                    });
-                });
-            });
-        });
+                                        }).catch(err => {
+                                            console.log(err);
+                                        });;
+                                    }).catch(err => {
+                                        console.log(err);
+                                    });;
+                                }).catch(err => {
+                                    console.log(err);
+                                });;
+                            }).catch(err => {
+                                console.log(err);
+                            });;
+                        }).catch(err => {
+                            console.log(err);
+                        });;
+                    }).catch(err => {
+                        console.log(err);
+                    });;
+                }).catch(err => {
+                    console.log(err);
+                });;
+            }).catch(err => {
+                console.log(err);
+            });;
+        }).catch(err => {
+            console.log(err);
+        });;
     }
 }

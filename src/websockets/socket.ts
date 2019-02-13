@@ -68,7 +68,7 @@ export class WebSocket
                 this.odController.userAnsweredCorrect(data).then((user)=>
                 {
                     socket.emit('updateUserCorrectPoints', user.correctAnswerCounter);
-                })
+                });
             });
 
             socket.on('updateQuizParticipationTime', (data) =>{
@@ -87,7 +87,7 @@ export class WebSocket
 
             socket.on('updateAnsweredQuestions', (data) =>
             {
-                this.quizController.updateAnsweredQuestion(data).then( question =>
+                this.quizController.updateAnsweredQuestion(data).then((question) =>
                 {
                     socket.emit('updateAnsweredQuestionsResult', question);
                 });
