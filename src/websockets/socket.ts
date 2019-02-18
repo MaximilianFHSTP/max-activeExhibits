@@ -7,6 +7,7 @@ require('dotenv').config();
 
 export class WebSocket
 {
+    private expressServer: any;
     private socketServer: any;
     private godSocket: any;
     private touchController: TouchController;
@@ -18,12 +19,11 @@ export class WebSocket
 
     constructor(server: any)
     {
-        this.socketServer = new IO(server);
+        this.expressServer = server;
         this.godSocket = IOClient.connect(process.env.GOD_URL, { secure: true, reconnect: true, rejectUnauthorized : false });
         this.touchController = new TouchController();
         this.store = Store.getInstance();
 
-        this.attachClientListeners();
         this.attachGodListeners();
     }
 
@@ -134,7 +134,12 @@ export class WebSocket
         this.godSocket.on('loginExhibitResult', (result) =>
         {
             this.touchController.updateTouchLocations(result.data);
+
+            if(!result.data) return;
+
             console.log("---------------- Connected to GoD ----------------");
+            this.socketServer = new IO(this.expressServer);
+            this.attachClientListeners();
         });
 
         /**
@@ -181,16 +186,14 @@ export class WebSocket
             ifaces[ifname].forEach(function (iface)
             {
               // skip over internal (i.e. 127.0.0.1) and non-ipv4 addresses
-              if ('IPv4' !== iface.family || iface.internal !== false || process.env.IP_ADDRESS !== iface.address)
-                return;
-            
-              address = iface.address;
+              if ('IPv4' === iface.family && iface.internal === false && process.env.IP_ADDRESS === iface.address)
+                  address = iface.address;
             });
           });
 
         if(process.env.BYPASS_IP_ADDRESS)
         {
-            console.log('Bypass-IP-Adresse: ' + address);
+            console.log('Bypass-IP-Adresse: ' + process.env.BYPASS_IP_ADDRESS);
             this.godSocket.emit('loginExhibit', process.env.BYPASS_IP_ADDRESS);
             return;
         }
