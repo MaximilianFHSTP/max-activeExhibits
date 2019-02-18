@@ -99,6 +99,22 @@ export class WebSocket
                 const parentLocation = this.touchController.getLocationId();
                 this.godSocket.emit('disconnectedFromExhibit', {location, parentLocation});
             });
+
+            socket.on('unlockCoaEmblem', (data) =>
+            {
+                const userId = (data.device === 'left') ? this.touchController.getLeftUserId() : this.touchController.getRightUserId();
+                const coaId = process.env.UNLOCK_COA_EMBLEM_ID;
+
+                this.godSocket.emit('unlockCoaPart', {userId, coaId});
+            });
+
+            socket.on('unlockCoaMantle', (data) =>
+            {
+                const userId = (data.device === 'left') ? this.touchController.getLeftUserId() : this.touchController.getRightUserId();
+                const coaId = process.env.UNLOCK_COA_MANTLE_ID;
+
+                this.godSocket.emit('unlockCoaPart', {userId, coaId});
+            });
         });
     }
 

@@ -62,4 +62,14 @@ export class TouchController
     {
         return this.store.leftTouchLocation.id;
     }
+
+    public getLeftUserId()
+    {
+        return (this.store.leftTouchUser) ? this.store.leftTouchUser.id : undefined;
+    }
+
+    public getRightUserId()
+    {
+        return (this.store.leftTouchUser) ? this.store.rightTouchUser.id : undefined;
+    }
 }
