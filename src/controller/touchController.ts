@@ -60,7 +60,7 @@ export class TouchController
 
     public getRightLocationId()
     {
-        return this.store.leftTouchLocation.id;
+        return this.store.rightTouchLocation.id;
     }
 
     public getLeftUserId()
@@ -70,6 +70,6 @@ export class TouchController
 
     public getRightUserId()
     {
-        return (this.store.leftTouchUser) ? this.store.rightTouchUser.id : undefined;
+        return (this.store.rightTouchUser) ? this.store.rightTouchUser.id : undefined;
     }
 }
