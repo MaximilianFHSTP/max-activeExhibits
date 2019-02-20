@@ -71,6 +71,12 @@ export class WebSocket
                 });
             });
 
+            socket.on('initialUserAnsweredCorrect', (data) => {
+                this.odController.initialUserAnsweredCorrect(data).then((user) => {
+                    socket.emit('updateUserCorrectPoints', user.correctAnswerCounter);
+                });
+            });
+
             socket.on('updateQuizParticipationTime', (data) =>{
                 this.odController.updateParticipationTime(data);
             })

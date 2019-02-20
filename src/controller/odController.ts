@@ -103,6 +103,16 @@ export class OdController {
         });
     }
 
+    public initialUserAnsweredCorrect(data){
+        return this.database.user.findOne({
+            where: {id: data.userId}
+        }).then((user) => {
+            return this.database.user.findOne({
+                where: {id: data.userId}
+            })
+        });
+    }
+
     public updateParticipationTime(data){
         return this.database.user.findOne({
             where: {id: data.userId}

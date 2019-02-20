@@ -40,6 +40,20 @@ export default class Server
             var icon = process.env.NODE_PATH + iconpth; 
             res.sendFile(icon);
         });
+
+        this.app.get('/css/*', function (req, res)
+        {   var csspth = req.url;
+            var css = process.env.NODE_PATH + csspth; 
+            res.sendFile(css);
+        });
+
+        this.app.get('/js/*', function (req, res)
+        {   var jspth = req.url;
+            var js = process.env.NODE_PATH + jspth; 
+            res.sendFile(js);
+        });
+
+        
     }
 }
 

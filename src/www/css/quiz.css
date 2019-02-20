@@ -1,0 +1,464 @@
+html,
+body {
+    height: 100%;
+}
+
+main {
+    height: 100%;
+}
+
+#requestUser {
+    margin: 10px 20px;
+}
+
+.progressbar {
+    width: 95%;
+    margin-top: -65px;
+    margin-bottom: 25px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.progressbar .inner {
+    height: 40px;
+    animation: progressbar-countdown;
+    animation-duration: 40s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-play-state: paused;
+    animation-timing-function: linear;
+}
+
+.progressbarhidden {
+    width: 95%;
+    margin-top: -65px;
+    margin-bottom: 25px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.progressbarhidden .inner {
+    height: 40px;
+    animation: progressbarhidden-countdown;
+    animation-duration: 40s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-play-state: paused;
+    animation-timing-function: linear;
+}
+
+.quest {
+    width: 100%;
+    margin-right: 15%;
+    text-align: center;
+    font-family: "VollkornBold";
+    font-size: 2.3em;
+}
+
+.headquest {
+    padding: 0 10%;
+}
+
+.ansA {
+    margin-left: 10%;
+    overflow: hidden;
+}
+
+.ansB {
+    margin-left: 5%;
+    overflow: hidden;
+}
+
+.ansC {
+    margin-left: 10%;
+    overflow: hidden;
+}
+
+.ansD {
+    margin-left: 5%;
+    overflow: hidden;
+}
+
+.answerA {
+    font-family: "OpenSansSemiBold";
+    font-size: 1.8em;
+    padding-top: 2%;
+    width: 84%;
+    float: right;
+
+}
+
+.answerB {
+    font-family: "OpenSansSemiBold";
+    font-size: 1.8em;
+    padding-top: 2%;
+    width: 87%;
+    float: right;
+}
+
+.answerC {
+    font-family: "OpenSansSemiBold";
+    font-size: 1.8em;
+    padding-top: 2%;
+    width: 84%;
+    float: right;
+}
+
+.answerD {
+    font-family: "OpenSansSemiBold";
+    font-size: 1.8em;
+    padding-top: 2%;
+    width: 87%;
+    float: right;
+}
+
+.capAns {
+    font-family: 'VollkornBold';
+    font-size: 3em;
+    color: #755300;
+    width: 10%;
+    float: left;
+}
+
+.ansLeft {
+    float: left;
+    width: 42%;
+    margin-left: 10%
+}
+
+.ansRight {
+    float: right;
+    width: 45%;
+    margin-right: 3%;
+}
+
+.disabled {
+    display: none;
+}
+
+.enabled {
+    display: inline-block;
+}
+
+.ansSum {
+    padding-left: 40%;
+    margin-top: -56px;
+    color: white;
+    font-family: 'OpenSansSemiBold'
+}
+
+.ansSumText {
+    padding-left: 25%;
+    color: white;
+    font-family: 'OpenSansSemiBold'
+}
+
+@keyframes progressbarhidden-countdown {
+    0% {
+        width: 100%;
+        background: rgba(144, 110, 27, 0.5);
+    }
+
+    100% {
+        width: 0%;
+        background: rgba(144, 110, 27, 0.5);
+    }
+}
+
+@keyframes progressbar-countdown {
+    0% {
+        width: 100%;
+        background: #906e1b;
+    }
+
+    100% {
+        width: 0%;
+        background: #906e1b;
+    }
+}
+
+.contentContainer {
+    margin-top: 2%;
+    margin-left: 25%;
+    margin-bottom: 2%;
+    width: 450px;
+    height: 500px;
+}
+
+.screenLeft {
+    padding-top: 2%;
+    float: left;
+    width: 49%;
+}
+
+.screenRight {
+    padding: 20px;
+    float: right;
+    width: 49.2%;
+    height: 100%;
+    background-color: #d3c5a4;
+}
+
+.progressbarWhiteback {
+    outline: solid 5px #755300;
+    width: 95%;
+    height: 40px;
+    margin: 25px auto;
+    background: white;
+}
+
+.bottominfo {
+    height: 70px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    background-color: #755300;
+}
+
+.infoleft {
+    color: white;
+    float: left;
+    width: 50%;
+    margin-top: 15px;
+    margin-left: 50px;
+    font-family: "OpenSansRegular";
+    font-size: 1.5em;
+}
+
+.inforight {
+    position: relative;
+    color: white;
+    float: right;
+    margin-top: 15px;
+    margin-right: 65px;
+    font-family: "OpenSansRegular";
+    font-size: 1.5em;
+}
+
+.bottomicon {
+    position: absolute;
+    bottom: 0;
+    left: 43.5%;
+}
+
+.screenDivider {
+    width: 1.8%;
+    height: 100%;
+    float: left;
+    background-color: #755300;
+}
+
+@font-face {
+    font-family: "OpenSansRegular";
+    src: url("../assets/fonts/OpenSans-Regular.ttf");
+}
+
+@font-face {
+    font-family: "OpenSansBold";
+    src: url("../assets/fonts/OpenSans-Bold.ttf");
+}
+
+@font-face {
+    font-family: "OpenSansSemiBold";
+    src: url("../assets/fonts/OpenSans-SemiBold.ttf");
+}
+
+@font-face {
+    font-family: "VollkornRegular";
+    src: url("../assets/fonts/Vollkorn-Regular.ttf");
+}
+
+@font-face {
+    font-family: "VollkornBold";
+    src: url("../assets/fonts/Vollkorn-Bold.ttf");
+}
+
+@font-face {
+    font-family: "VollkornSemiBold";
+    src: url("../assets/fonts/Vollkorn-SemiBold.ttf");
+}
+
+.bars {
+    margin-bottom: 5%;
+    height: 50%;
+}
+
+.whitebars {
+    margin-left: 10%;
+    width: 90%;
+    overflow: hidden;
+}
+
+.barA {
+    height: 428px;
+    width: 150px;
+    margin-right: 3%;
+    float: left;
+    position: relative;
+}
+
+.barB {
+    height: 428px;
+    width: 150px;
+    margin-right: 3%;
+    float: left;
+    position: relative;
+}
+
+.barC {
+    height: 428px;
+    width: 150px;
+    margin-right: 3%;
+    float: left;
+    position: relative;
+}
+
+.barD {
+    height: 428px;
+    width: 150px;
+    margin-right: 3%;
+    float: left;
+    position: relative;
+}
+
+.whitebar {
+    background-color: white;
+    height: 360px;
+    width: 110px;
+    margin: 0 auto;
+}
+
+.corAns {
+    font-family: 'OpenSansSemiBold';
+    font-size: 2em;
+    text-align: center;
+}
+
+.elab {
+    margin-left: 10%;
+    margin-right: 10%;
+    font-family: 'OpenSansSemiBold';
+    font-size: 1.4em;
+}
+
+.answerBoard {
+    height: 60px;
+    width: 150px;
+    background-color: #755300;
+    margin-top: -270px;
+}
+
+.barSocket {
+    height: 60px;
+    width: 150px;
+    background-color: white;
+}
+
+.lineSocket {
+    height: 8px;
+    width: 150px;
+    background-color: #906e1b;
+    margin-top: 218px;
+}
+
+.fontSocket {
+    color: #755300;
+    font-size: 3em;
+    font-family: 'VollkornBold';
+    margin-top: -62px;
+    margin-left: 38%;
+}
+
+.startBarLine {
+    height: 20px;
+    width: 86.9%;
+    background-color: #906e1b;
+    margin-top: 20px;
+    margin-left: 2.75%;
+}
+
+.endBarLine {
+    height: 20px;
+    width: 92.4%;
+    background-color: #906e1b;
+    margin-top: 428px;
+}
+
+.solution {
+    margin-top: 8%;
+}
+
+.percentageBox {
+    width: 110px;
+    height: 75px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -375px;
+}
+
+.percentage {
+    text-align: center;
+    color: #755300;
+    font-size: 1.2em;
+    font-family: 'OpenSansBold';
+}
+
+.percentext {
+    text-align: center;
+    color: #755300;
+    font-size: 1em;
+    font-family: 'OpenSansSemiBold';
+}
+
+.linePercentage {
+    height: 8px;
+    width: 110px;
+    background-color: #755300;
+    margin-top: 3px;
+}
+
+.percentageBarWrapper {
+    width: 110px;
+    height: 210px;
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
+.percentageBar {
+    background-color: #755300;
+    animation: bargrowth 10s ease;
+}
+
+@-webkit-keyframes bargrowth {
+    0% {
+        max-height: 0%;
+    }
+
+    100% {
+        max-height: 100%;
+    }
+}
+
+@keyframes bargrowth {
+    0% {
+        max-height: 0%;
+    }
+
+    100% {
+        max-height: 100%;
+    }
+}
+
+circle {
+    fill: #755300;
+}
+
+.balls {
+    position: relative;
+    margin-left: 20px;
+    margin-top: -138px;
+
+}
