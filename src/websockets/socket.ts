@@ -96,8 +96,9 @@ export class WebSocket
             socket.on('userTimedOut', (data) =>
             {
                 const location = (data.device === 'left') ? this.touchController.getLeftLocationId() : this.touchController.getRightLocationId();
+                const user = (data.device === 'left') ? this.touchController.getLeftUserId() : this.touchController.getRightUserId();
                 const parentLocation = this.touchController.getLocationId();
-                this.godSocket.emit('disconnectedFromExhibit', {location, parentLocation});
+                this.godSocket.emit('disconnectedFromExhibit', {location, parentLocation, user});
             });
 
             socket.on('unlockCoaEmblem', (data) =>
