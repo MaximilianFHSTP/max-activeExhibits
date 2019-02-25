@@ -1,5 +1,6 @@
 import * as Express from 'express';
 import * as http from 'http';
+import * as path from 'path';
 import  { WebSocket } from '../websockets';
 require('dotenv').config();
 
