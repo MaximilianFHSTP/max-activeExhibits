@@ -14,7 +14,6 @@ export class WebSocket
     private store: Store;
 
     private legendGameSocket: any;
-    private touchSocket: any;
 
     constructor(server: any)
     {
@@ -35,40 +34,18 @@ export class WebSocket
             /**
              * call to connect the projection to the server
              */
-            socket.on('connectProjection', () => {
-                this.projectionSocket = socket;
-                socket.emit('connectProjectionResult', 'SUCCESS');
-            });
-
-            /**
-             * call to connect the touch screens (left and right) to the server
-             * data {device: ['left' / 'right']}
-             */
-            socket.on('connectTouch', (data) =>
-            {
-                this.touchSocket = socket;
-                socket.emit('connectTouchResult', 'SUCCESS');
-            });
-
-            /**
-             * call to send data to the projection
-             * data {device: ['left' / 'right']}
-             */
-            socket.on('sendDataToProjection', (data) =>
-            {
-                (this.touchLeftSocket.id === socket.id) ? data.device = 'left' : data.device = 'right';
-
-                if(this.projectionSocket)
-                    this.projectionSocket.emit('updateProjection',data);
+            socket.on('connectTable', () => {
+                this.legendGameSocket = socket;
+                socket.emit('connectTableResult', 'SUCCESS');
             });
 
             /**
              * Call if a local user (no OD) started to explore the exhibit
              * data {device: ['left' / 'right']}
              */
-            socket.on('localUserJoined', (data) =>
+            socket.on('localUserJoined', () =>
             {
-                const location = (data.device === 'left') ? this.touchController.getLeftLocationId() : this.touchController.getRightLocationId();
+                const location = this.touchController.getTouchLocationId();
                 this.godSocket.emit('updateSeat', {location});
             });
 
@@ -76,9 +53,9 @@ export class WebSocket
              * Call if a local user (no OD) has reached the time out
              * data {device: ['left' / 'right']}
              */
-            socket.on('localUserLeft', (data) =>
+            socket.on('localUserLeft', () =>
             {
-                const location = (data.device === 'left') ? this.touchController.getLeftLocationId() : this.touchController.getRightLocationId();
+                const location = this.touchController.getTouchLocationId();
                 const parentLocation = this.touchController.getLocationId();
                 this.godSocket.emit('disconnectedFromExhibit', {location, parentLocation});
             });
@@ -87,17 +64,17 @@ export class WebSocket
              * Call if a user who came from GoD has reached the time out
              * data {device: ['left' / 'right']}
              */
-            socket.on('userTimedOut', (data) =>
+            socket.on('userTimedOut', () =>
             {
-                const location = (data.device === 'left') ? this.touchController.getLeftLocationId() : this.touchController.getRightLocationId();
-                const user = (data.device === 'left') ? this.touchController.getLeftUserId() : this.touchController.getRightUserId();
+                const location = this.touchController.getTouchLocationId();
+                const user = this.touchController.getUserId();
                 const parentLocation = this.touchController.getLocationId();
                 this.godSocket.emit('disconnectedFromExhibit', {location, parentLocation, user});
             });
 
-            socket.on('unlockCoaMantle', (data) =>
+            socket.on('unlockCoaMantle', () =>
             {
-                const userId = (data.device === 'left') ? this.touchController.getLeftUserId() : this.touchController.getRightUserId();
+                const userId = this.touchController.getUserId();
                 const coaId = process.env.UNLOCK_COA_MANTLE_ID;
 
                 this.godSocket.emit('unlockCoaPartFromExhibit', {userId, coaId});
@@ -135,30 +112,20 @@ export class WebSocket
          */
         this.godSocket.on('odJoined', (result) =>
         {
-            const isLeft = this.touchController.isLeftLocation(result.location.id);
-            this.touchController.updateTouchUser(result.location, result.user);
+            this.touchController.updateTouchUser(result.user);
 
-            if(isLeft && this.touchLeftSocket)
-                this.touchLeftSocket.emit('userJoined', result.user);
-
-            if(!isLeft && this.touchRightSocket)
-                this.touchRightSocket.emit('userJoined', result.user);
+            this.legendGameSocket.emit('userJoined', result.user);
         });
 
         /**
          * will be called if a GoD user actively left the exhibit
          * * data {location}
          */
-        this.godSocket.on('odLeft', (result) =>
+        this.godSocket.on('odLeft', () =>
         {
-            const isLeft = this.touchController.isLeftLocation(result.location.id);
-            this.touchController.deleteTouchUser(result.location);
+            this.touchController.deleteTouchUser();
 
-            if(isLeft && this.touchLeftSocket)
-                this.touchLeftSocket.emit('userLeft');
-
-            if(!isLeft && this.touchRightSocket)
-                this.touchRightSocket.emit('userLeft');
+            this.legendGameSocket.emit('userLeft');
         });
     }
 

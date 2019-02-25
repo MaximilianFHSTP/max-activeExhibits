@@ -8,27 +8,14 @@ export class TouchController
         this.store = Store.getInstance();
     }
 
-    public updateTouchUser(location: any, user: any)
+    public updateTouchUser(user: any)
     {
-        if(this.isLeftLocation(location.id))
-            this.store.leftTouchUser = user;
-
-        else
-            this.store.rightTouchUser = user;
+        this.store.touchUser = user;
     }
 
-    public isLeftLocation(checkId: any)
+    public deleteTouchUser()
     {
-        return checkId === this.store.leftTouchLocation.id;
-    }
-
-    public deleteTouchUser(location: any)
-    {
-        if(this.isLeftLocation(location.id))
-            this.store.leftTouchUser = undefined;
-
-        else
-            this.store.rightTouchUser = undefined;
+        this.store.touchUser = undefined;
     }
 
     public updateTouchLocations(data: any)
@@ -40,11 +27,7 @@ export class TouchController
 
         for(let child of data.childLocations)
         {
-            if(child.locationTag === 'left')
-                this.store.leftTouchLocation = child;
-
-            else if(child.locationTag === 'right')
-                this.store.rightTouchLocation = child;
+            this.store.touchLocation = child;
         }
     }
 
@@ -53,23 +36,13 @@ export class TouchController
         return this.store.location.id;
     }
 
-    public getLeftLocationId()
+    public getTouchLocationId()
     {
-        return this.store.leftTouchLocation.id;
+        return this.store.touchLocation.id;
     }
 
-    public getRightLocationId()
+    public getUserId()
     {
-        return this.store.rightTouchLocation.id;
-    }
-
-    public getLeftUserId()
-    {
-        return (this.store.leftTouchUser) ? this.store.leftTouchUser.id : undefined;
-    }
-
-    public getRightUserId()
-    {
-        return (this.store.rightTouchUser) ? this.store.rightTouchUser.id : undefined;
+        return this.store.touchUser.id;
     }
 }

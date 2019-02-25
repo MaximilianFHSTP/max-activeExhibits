@@ -2,10 +2,8 @@ export class Store
 {
     private static _instance: Store;
     private _location: any;
-    private _leftTouchLocation: any;
-    private _rightTouchLocation: any;
-    private _leftTouchUser: any;
-    private _rightTouchUser: any;
+    private _touchLocation: any;
+    private _touchUser: any;
 
     public static getInstance(): Store
     {
@@ -27,35 +25,19 @@ export class Store
         this._location = location;
     }
 
-    get leftTouchUser(): any {
-        return this._leftTouchUser;
+    get touchLocation(): any {
+        return this._touchLocation;
     }
 
-    set leftTouchUser(value: any) {
-        this._leftTouchUser = value;
+    set touchLocation(value: any) {
+        this._touchLocation = value;
     }
 
-    get rightTouchUser(): any {
-        return this._rightTouchUser;
+    get touchUser(): any {
+        return this._touchUser;
     }
 
-    set rightTouchUser(value: any) {
-        this._rightTouchUser = value;
-    }
-
-    get leftTouchLocation(): any {
-        return this._leftTouchLocation;
-    }
-
-    set leftTouchLocation(value: any) {
-        this._leftTouchLocation = value;
-    }
-
-    get rightTouchLocation(): any {
-        return this._rightTouchLocation;
-    }
-
-    set rightTouchLocation(value: any) {
-        this._rightTouchLocation = value;
+    set touchUser(value: any) {
+        this._touchUser = value;
     }
 }
