@@ -44,6 +44,8 @@ export class UnityController
         const parentLocation = this._store.location.id;
         this._godSocket.emit('disconnectedFromExhibit', {location, parentLocation, user});
 
+        this._store.touchUser = undefined;
+
         res.status(200).send();
     }
 
