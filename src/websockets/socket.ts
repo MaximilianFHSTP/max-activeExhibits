@@ -57,6 +57,13 @@ export class WebSocket
             this.touchController.updateTouchUser(result.user);
         });
 
+        this.godSocket.on('disconnectedFromExhibitResult', (result) =>
+        {
+           if(result.message.code > 299) return;
+
+           this.touchController.deleteTouchUser();
+        });
+
         /**
          * will be called if a GoD user actively left the exhibit
          * * data {location}
