@@ -46,13 +46,14 @@ export class WebSocket
              * data {device: ['left' / 'right']}
              */
             socket.on('connectTouch', (data) =>
-            {
+            {   
+                console.log('connectTouch');
+                console.log(data);
                 if(data.device === 'left')
                     this.touchLeftSocket = socket;
 
                 else
                     this.touchRightSocket = socket;
-
                 socket.emit('connectTouchResult', 'SUCCESS');
             });
 
@@ -63,9 +64,12 @@ export class WebSocket
             socket.on('sendDataToProjection', (data) =>
             {
                 (this.touchLeftSocket.id === socket.id) ? data.device = 'left' : data.device = 'right';
-
-                if(this.projectionSocket)
+                console.log("show on projection")
+                console.log(data)
+                if(this.projectionSocket){
                     this.projectionSocket.emit('updateProjection',data);
+                }
+                    
             });
 
             /**
@@ -95,6 +99,8 @@ export class WebSocket
              */
             socket.on('userTimedOut', (data) =>
             {
+                console.log("user timed out")
+                console.log(data)
                 const location = (data.device === 'left') ? this.touchController.getLeftLocationId() : this.touchController.getRightLocationId();
                 const user = (data.device === 'left') ? this.touchController.getLeftUserId() : this.touchController.getRightUserId();
                 const parentLocation = this.touchController.getLocationId();
@@ -103,6 +109,9 @@ export class WebSocket
 
             socket.on('unlockCoaMantle', (data) =>
             {
+                // find special person
+                console.log('special person found')
+                console.log(data)
                 const userId = (data.device === 'left') ? this.touchController.getLeftUserId() : this.touchController.getRightUserId();
                 const coaId = process.env.UNLOCK_COA_MANTLE_ID;
 

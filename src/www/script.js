@@ -2,7 +2,8 @@
 
 var d3, io
 
-var socket = io('http://localhost:8100/')
+//var socket = io('http://localhost:8100/')
+var socket = io('http://localhost:8181/')
 socket.emit('connectProjection')
 socket.on('connectProjectionResult', function (data) {
   console.log(data)
@@ -13,11 +14,11 @@ socket.on('updateUserInformation', function (data) {
 })
 
 var printedPosLeft = [
-  { 'x': 443, 'y': 114 },
-  { 'x': 443, 'y': 330 },
-  { 'x': 443, 'y': 540 },
-  { 'x': 443, 'y': 755 },
-  { 'x': 443, 'y': 960 }
+  { 'x': 393, 'y': 124 },
+  { 'x': 393, 'y': 330 },
+  { 'x': 393, 'y': 540 },
+  { 'x': 393, 'y': 755 },
+  { 'x': 393, 'y': 960 }
 ]
 
 var printedPosRight = [
@@ -29,19 +30,19 @@ var printedPosRight = [
 ]
 
 var printedPosLeftOther = [
-  { 'x': 765, 'y': 198 },
-  { 'x': 765, 'y': 410 },
-  { 'x': 765, 'y': 622 },
-  { 'x': 765, 'y': 835 },
-  { 'x': 765, 'y': 883 }
+  { 'x': 705, 'y': 205 },
+  { 'x': 705, 'y': 410 },
+  { 'x': 705, 'y': 622 },
+  { 'x': 705, 'y': 835 },
+  { 'x': 705, 'y': 883 }
 ]
 
 var printedPosRightOther = [
-  { 'x': 518, 'y': 198 },
-  { 'x': 518, 'y': 410 },
-  { 'x': 518, 'y': 622 },
-  { 'x': 518, 'y': 835 },
-  { 'x': 518, 'y': 883 }
+  { 'x': 458, 'y': 205 },
+  { 'x': 458, 'y': 410 },
+  { 'x': 458, 'y': 622 },
+  { 'x': 458, 'y': 835 },
+  { 'x': 458, 'y': 883 }
 ]
 
 var printedPosFather = [
@@ -64,15 +65,15 @@ d3.json('data/genealogy-data.json', function (data) {
 
       // waiting for websocket call from client with side and personid
       var side = 'left'
-      var personId = 37
+      var personId = 6
 
       socket.on('updateProjection', function (data) {
         console.log(data)
         showData(data.device, data.data)
       })
 
-      // showData(side, personId)
-      // showData('right', 37)
+      showData(side, personId)
+      showData('right', 1)
 
       function showData (whichSide, whichPersonId) {
         getPersonById(whichPersonId)
@@ -556,7 +557,7 @@ d3.json('data/genealogy-data.json', function (data) {
                         .style('left', myPositions.x + marginLeft - 40 + 'px')
                       myConnection.append('img')
                         .attr('src', '/img/connection/horizontal-long.png')
-                        .attr('class', 'vertical')
+                        .attr('class', 'horizontal')
                         .style('top', myPositions.y + 13 + 'px')
                         .style('left', myPositions.x + marginLeft - 430 + 'px')
                       myConnection.append('img')
@@ -714,7 +715,7 @@ d3.json('data/genealogy-data.json', function (data) {
                         .style('left', myPositions.x + marginLeft + 'px')
                       myConnection.append('img')
                         .attr('src', '/img/connection/horizontal-long.png')
-                        .attr('class', 'vertical')
+                        .attr('class', 'horizontal')
                         .style('top', myPositions.y - 12 + 'px')
                         .style('left', myPositions.x + marginLeft - 0 + 'px')
                       myConnection.append('img')
@@ -723,7 +724,7 @@ d3.json('data/genealogy-data.json', function (data) {
                         .style('top', myPositions.y + 6 + 'px')
                         .style('left', myPositions.x + marginLeft + 330 + 'px')
                       myConnection.append('img')
-                        .attr('src', '/img/connection/verticalv.png')
+                        .attr('src', '/img/connection/vertical-long.png')
                         .attr('class', 'vertical')
                         .style('top', myPositions.y + 20 + 'px')
                         .style('left', myPositions.x + marginLeft + 348 + 'px')
@@ -888,6 +889,11 @@ d3.json('data/genealogy-data.json', function (data) {
           .attr('src', '/img/connection/circle-flower-p.png')
           .attr('class', 'circle')
 
+        map.append('h1').text('Politischer Machtbereich der Babenberger | Political power of the Babenberg')
+        map.append('img')
+          .attr('src', '/img/maps/mapVersuch.png')
+          .attr('class', 'mapimg')
+
         showRelations(children, myPerson, whichSide)
       }
 
@@ -934,6 +940,9 @@ d3.json('data/genealogy-data.json', function (data) {
             timeString += '~ '
           }
           timeString += myPerson.born
+          if (myPerson.bornGuessed) {
+            timeString += ' ?'
+          }
         } else {
           if (myPerson.diedGuessed) {
             timeString += '~ '
@@ -989,6 +998,11 @@ d3.json('data/genealogy-data.json', function (data) {
               .text(spouseName)
 
             if (typeof spouse.children !== 'undefined') {
+              var childappend = divRelation
+              if(childItem.template == 8){
+                childappend = divRelation.append('div').attr('class', 'children8')
+              }
+
               spouse.children.forEach((child, index) => {
                 var childImg
                 var childName
@@ -1000,8 +1014,8 @@ d3.json('data/genealogy-data.json', function (data) {
                   childImg = myPerson.img
                   childName = myPerson.name
                 }
-
-                var divChild = divRelation.append('div').attr('class', 'child')
+              
+                var divChild = childappend.append('div').attr('class', 'child')
                 divChild.append('img')
                   .attr('src', function () {
                     return 'img/' + childImg + '.png'
