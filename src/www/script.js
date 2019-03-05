@@ -891,7 +891,7 @@ d3.json('data/genealogy-data.json', function (data) {
 
         map.append('h1').text('Politischer Machtbereich der Babenberger | Political power of the Babenberg')
         map.append('img')
-          .attr('src', '/img/maps/mapVersuch.png')
+          .attr('src', '/img/maps/map1246.png')
           .attr('class', 'mapimg')
 
         showRelations(children, myPerson, whichSide)
