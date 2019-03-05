@@ -356,7 +356,13 @@ d3.json('data/genealogy-data.json', function (data) {
                   switch (printedRelative.position) {
                     case 1:
                       myPositions = printedPosLeft[printedRelative.position - 1]
-
+                      
+                      myConnection.append('img')
+                        .attr('src', '/img/connection/Testliane.png')
+                        .attr('class', 'liane')
+                        .style('top', myPositions.y + 20 + 'px')
+                        .style('left', myPositions.x + marginLeft - 61 + 'px')
+                    /*
                       myConnection.append('img')
                         .attr('src', '/img/connection/vertical-long.png')
                         .attr('class', 'vertical')
@@ -371,7 +377,7 @@ d3.json('data/genealogy-data.json', function (data) {
                         .attr('src', '/img/connection/corner-br.png')
                         .attr('class', 'corner')
                         .style('top', myPositions.y + 365 + 'px')
-                        .style('left', myPositions.x + marginLeft - 79 + 'px')
+                        .style('left', myPositions.x + marginLeft - 79 + 'px')*/
                       break
                     case 2:
                       myPositions = printedPosLeft[printedRelative.position - 1]

@@ -32,6 +32,10 @@ p {
     background: white;
 }
 
+.liane{
+    width: 80px;
+}
+
 .col{
     display: table-cell;
     vertical-align: top;
