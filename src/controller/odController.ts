@@ -93,13 +93,22 @@ export class OdController {
         }).then((user) => {
             if(isCorrect){
                 let corrAnswer = user.correctAnswerCounter;
-                this.database.user.update({correctAnswerCounter: corrAnswer + 1}, {where: {id: user.id}});
+                return this.database.user.update({correctAnswerCounter: corrAnswer + 1}, {where: {id: user.id}}).then(() =>{
+                    let allAnswer = user.answerCounter;
+                    return this.database.user.update({answerCounter: allAnswer + 1}, {where: {id: user.id}}).then(() =>{
+                        return this.database.user.findOne({
+                            where: {id: data.userId}
+                        });
+                    });
+                });
+            }else{
+                let allAnswer = user.answerCounter;
+                return this.database.user.update({answerCounter: allAnswer + 1}, {where: {id: user.id}}).then(() =>{
+                    return this.database.user.findOne({
+                        where: {id: data.userId}
+                    });
+                });
             }
-            let allAnswer = user.answerCounter;
-            this.database.user.update({answerCounter: allAnswer + 1}, {where: {id: user.id}});
-            return this.database.user.findOne({
-                where: {id: data.userId}
-            })
         });
     }
 
