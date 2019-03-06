@@ -599,8 +599,8 @@ d3.json('data/genealogy-data.json', function (data) {
 
             if (typeof spouse.children !== 'undefined') {
               var childappend = divRelation
-              if(childItem.template == 8){
-                childappend = divRelation.append('div').attr('class', 'children8')
+              if(childItem.template == 8 || childItem.template == 7 || childItem.template == 6 || childItem.template == 5){
+                childappend = divRelation.append('div').attr('class', 'children'+childItem.template)
               }
 
               spouse.children.forEach((child, index) => {
