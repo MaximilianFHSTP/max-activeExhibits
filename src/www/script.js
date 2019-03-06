@@ -65,7 +65,7 @@ d3.json('data/genealogy-data.json', function (data) {
 
       // waiting for websocket call from client with side and personid
       var side = 'left'
-      var personId = 6
+      var personId = 1
 
       socket.on('updateProjection', function (data) {
         console.log(data)
@@ -355,12 +355,13 @@ d3.json('data/genealogy-data.json', function (data) {
                   console.log('show connection on left side')
                   switch (printedRelative.position) {
                     case 1:
+                      // Leopold III.
                       myPositions = printedPosLeft[printedRelative.position - 1]
                       
                       myConnection.append('img')
-                        .attr('src', '/img/connection/Testliane.png')
+                        .attr('src', '/img/connection/left/left1.png')
                         .attr('class', 'liane')
-                        .style('top', myPositions.y + 20 + 'px')
+                        .style('top', myPositions.y + 0 + 'px')
                         .style('left', myPositions.x + marginLeft - 61 + 'px')
                     /*
                       myConnection.append('img')
@@ -895,9 +896,19 @@ d3.json('data/genealogy-data.json', function (data) {
           .attr('src', '/img/connection/circle-flower-p.png')
           .attr('class', 'circle')
 
+
+        // if death until 1156 than map1156, if death > 1156 than map1246
+        // side left or right
+        var mapToShow
+        if(myPerson.died <= 1156){
+          mapToShow = 'map1156'
+        }else{
+          mapToShow = 'map1246'
+        }
+
         map.append('h1').text('Politischer Machtbereich der Babenberger | Political power of the Babenberg')
         map.append('img')
-          .attr('src', '/img/maps/map1246.png')
+          .attr('src', '/img/maps/'+mapToShow+'.png') // todo add side
           .attr('class', 'mapimg')
 
         showRelations(children, myPerson, whichSide)

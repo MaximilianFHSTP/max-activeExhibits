@@ -32,10 +32,6 @@ p {
     background: white;
 }
 
-.liane{
-    width: 80px;
-}
-
 .col{
     display: table-cell;
     vertical-align: top;
@@ -190,6 +186,11 @@ img.died{
 
 #relativeLeft img, #relativeRight img{
     position: absolute;
+}
+
+.liane{
+    position: absolute;
+    z-index: 10;
 }
 
 .corner{
