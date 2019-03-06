@@ -19,7 +19,7 @@ export default class Server
         console.log('Server runs on Port: ' + process.env.SERVER_PORT);
         this.server.listen(process.env.SERVER_PORT);
 
-        this.app.use(Express.static(path.join(__dirname, '../www')));
+        this.app.use(Express.static(path.join(process.env.NODE_PATH, 'src/www')));
 
         this.app.get('/', function (req, res)
         {
