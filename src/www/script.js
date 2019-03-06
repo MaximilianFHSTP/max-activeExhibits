@@ -355,7 +355,7 @@ d3.json('data/genealogy-data.json', function (data) {
                   console.log('show connection on left side')
                   switch (printedRelative.position) {
                     case 1:
-                      // Leopold III.
+                      // Leopold III. left
                       myPositions = printedPosLeft[printedRelative.position - 1]
                       
                       myConnection.append('img')
@@ -363,22 +363,6 @@ d3.json('data/genealogy-data.json', function (data) {
                         .attr('class', 'liane')
                         .style('top', myPositions.y + 0 + 'px')
                         .style('left', myPositions.x + marginLeft - 61 + 'px')
-                    /*
-                      myConnection.append('img')
-                        .attr('src', '/img/connection/vertical-long.png')
-                        .attr('class', 'vertical')
-                        .style('top', myPositions.y + 20 + 'px')
-                        .style('left', myPositions.x + marginLeft - 61 + 'px')
-                      myConnection.append('img')
-                        .attr('src', '/img/connection/corner-tl.png')
-                        .attr('class', 'corner')
-                        .style('top', myPositions.y + 'px')
-                        .style('left', myPositions.x + marginLeft - 45 + 'px')
-                      myConnection.append('img')
-                        .attr('src', '/img/connection/corner-br.png')
-                        .attr('class', 'corner')
-                        .style('top', myPositions.y + 365 + 'px')
-                        .style('left', myPositions.x + marginLeft - 79 + 'px')*/
                       break
                     case 2:
                       myPositions = printedPosLeft[printedRelative.position - 1]
@@ -456,8 +440,15 @@ d3.json('data/genealogy-data.json', function (data) {
                   console.log('show connection default')
                   switch (printedRelative.position) {
                     case 1:
+                      // Leopold III. right
                       myPositions = printedPosRight[printedRelative.position - 1]
 
+                      myConnection.append('img')
+                        .attr('src', '/img/connection/right/right1.png')
+                        .attr('class', 'liane')
+                        .style('top', myPositions.y + 0 + 'px')
+                        .style('left', myPositions.x + marginLeft + 17 + 'px')
+                        /*
                       myConnection.append('img')
                         .attr('src', '/img/connection/vertical-long.png')
                         .attr('class', 'vertical')
@@ -472,7 +463,7 @@ d3.json('data/genealogy-data.json', function (data) {
                         .attr('src', '/img/connection/corner-bl.png')
                         .attr('class', 'corner')
                         .style('top', myPositions.y + 365 + 'px')
-                        .style('left', myPositions.x + marginLeft + 33 + 'px')
+                        .style('left', myPositions.x + marginLeft + 33 + 'px')*/
                       break
                     case 2:
                       myPositions = printedPosRight[printedRelative.position - 1]
