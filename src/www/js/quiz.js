@@ -311,7 +311,7 @@ socket.on('getNextQuestionResult', function (data) {
     elaboration.className = 'disabled';
     const message = {
         questionId: data.id, questionGer: data.textGer, answerAGer: data.answers[0].textGer, answerBGer: data.answers[1].textGer, answerCGer: data.answers[2].textGer, answerDGer: data.answers[3].textGer,
-        questionEng: data.textGer, answerAEng: data.answers[0].textEng, answerBEng: data.answers[1].textEng, answerCEng: data.answers[2].textEng, answerDEng: data.answers[3].textEng, correctAnswer: correctAnswer
+        questionEng: data.textEng, answerAEng: data.answers[0].textEng, answerBEng: data.answers[1].textEng, answerCEng: data.answers[2].textEng, answerDEng: data.answers[3].textEng, correctAnswer: correctAnswer
     };
     socket.emit('getQuestion', message);
     changeQuestionAndRestartTimer();
