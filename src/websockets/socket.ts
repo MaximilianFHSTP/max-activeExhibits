@@ -63,6 +63,8 @@ export class WebSocket
              */
             socket.on('sendDataToProjection', (data) =>
             {
+                if(!this.touchLeftSocket || !this.touchLeftSocket) return;
+                
                 (this.touchLeftSocket.id === socket.id) ? data.device = 'left' : data.device = 'right';
                 console.log("show on projection")
                 console.log(data)
