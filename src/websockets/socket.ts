@@ -63,11 +63,16 @@ export class WebSocket
              */
             socket.on('sendDataToProjection', (data) =>
             {
-                if(!this.touchLeftSocket || !this.touchLeftSocket) { console.log("Touch displays not connected"); return;}
+                if(this.touchLeftSocket && this.touchLeftSocket.id === socket.id)
+                    data.device = 'left';
 
-                (this.touchLeftSocket.id === socket.id) ? data.device = 'left' : data.device = 'right';
-                console.log("show on projection")
-                console.log(data)
+                else if(this.touchRightSocket && this.touchRightSocket.id === socket.id)
+                    data.device = 'right';
+
+                if(data.device === null || data.device === undefined) return;
+
+                console.log("show on projection");
+                console.log(data);
                 if(this.projectionSocket){
                     this.projectionSocket.emit('updateProjection',data);
                 }
