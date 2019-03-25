@@ -4,6 +4,7 @@ import  { Connection, Store } from '../database';
 import { OdController } from "../controller";
 import * as os from 'os';
 import {QuizController} from "../controller/quizController";
+import { GuestlistController } from '../controller/guestlistController';
 require('dotenv').config();
 
 export class WebSocket
@@ -13,10 +14,12 @@ export class WebSocket
     private database: any;
     private odController: OdController;
     private quizController: QuizController;
+    private guestlistController: GuestlistController;
     private store: Store;
     private EXPIRATION_TIME = 1000 * 60;
 
     private tableClientSocket: any;
+    private guestlistSocket: any;
 
     constructor(server: any)
     {
@@ -24,6 +27,7 @@ export class WebSocket
         this.godSocket = IOClient.connect(process.env.GOD_URL, { secure: true, reconnect: true, rejectUnauthorized : false });
         this.odController = new OdController();
         this.quizController = new QuizController();
+        this.guestlistController = new GuestlistController();
         this.database = Connection.getInstance();
         this.store = Store.getInstance();
 
@@ -50,8 +54,18 @@ export class WebSocket
                 this.quizController.findNextQuestion().then( question =>
                 {
                     socket.emit('getNextQuestionResult', question);
+                    this.guestlistController.getGuestListData().then( users =>{
+                        console.log('quiz', users);
+                        socket.to(this.guestlistSocket).emit('getGuestlistData', users);
+                    });
                 });
             });
+
+            socket.on('connectGuestlist', (data) => {
+                this.guestlistSocket = socket.id;
+                console.log('GUESTLIST CLIENT: ', this.guestlistSocket);
+                socket.emit('guestlist', { connected: 'SUCCESS' });
+            })
 
             socket.on('getQuestion', (data) =>
             {
