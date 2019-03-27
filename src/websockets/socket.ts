@@ -46,7 +46,7 @@ export class WebSocket
              * data {device: ['left' / 'right']}
              */
             socket.on('connectTouch', (data) =>
-            {   
+            {
                 console.log('connectTouch');
                 console.log(data);
                 if(data.device === 'left')
@@ -76,7 +76,7 @@ export class WebSocket
                 if(this.projectionSocket){
                     this.projectionSocket.emit('updateProjection',data);
                 }
-                    
+
             });
 
             /**
@@ -97,7 +97,7 @@ export class WebSocket
             {
                 const location = (data.device === 'left') ? this.touchController.getLeftLocationId() : this.touchController.getRightLocationId();
                 const parentLocation = this.touchController.getLocationId();
-                this.godSocket.emit('disconnectedFromExhibit', {location, parentLocation});
+                this.godSocket.emit('exhibitDisconnectedFromExhibit', {location, parentLocation, user: 'localUser'});
             });
 
             /**
@@ -106,12 +106,12 @@ export class WebSocket
              */
             socket.on('userTimedOut', (data) =>
             {
-                console.log("user timed out")
-                console.log(data)
+                console.log("user timed out at "+ Date.now());
+                console.log(data);
                 const location = (data.device === 'left') ? this.touchController.getLeftLocationId() : this.touchController.getRightLocationId();
                 const user = (data.device === 'left') ? this.touchController.getLeftUserId() : this.touchController.getRightUserId();
                 const parentLocation = this.touchController.getLocationId();
-                this.godSocket.emit('disconnectedFromExhibit', {location, parentLocation, user});
+                this.godSocket.emit('exhibitDisconnectedFromExhibit', {location, parentLocation, user});
             });
 
             socket.on('unlockCoaMantle', (data) =>
