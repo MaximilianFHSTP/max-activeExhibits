@@ -42,7 +42,7 @@ export class UnityController
         const location = this._store.touchLocation.id;
         const user = this._store.touchUser.id;
         const parentLocation = this._store.location.id;
-        this._godSocket.emit('disconnectedFromExhibit', {location, parentLocation, user});
+        this._godSocket.emit('exhibitDisconnectedFromExhibit', {location, parentLocation, user});
 
         this._store.touchUser = undefined;
 
@@ -61,7 +61,7 @@ export class UnityController
     {
         const location = this._store.touchLocation.id;
         const parentLocation = this._store.location.id;
-        this._godSocket.emit('disconnectedFromExhibit', {location, parentLocation});
+        this._godSocket.emit('exhibitDisconnectedFromExhibit', {location, parentLocation, user: 'localUser'});
 
         res.status(200).send();
     }
