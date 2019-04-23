@@ -26,11 +26,14 @@ export class Connection
         const dataFactory = new DataFactory();
         dataFactory.connection = this;
 
-        this._sequelize.sync(/*{force: true}*/).then(() => {
+        /*
+        this._sequelize.sync({force: true}).then(() => {
             dataFactory.createData().catch(err => {
                 console.log("Could not create data!");
             });
-        });
+        });*/
+
+        this._sequelize.sync();
     }
 
     public static getInstance(): Connection
@@ -195,6 +198,11 @@ export class Connection
                 type: Sequelize.INTEGER,
                 allowNull: false,
                 defaultValue: 0
+            },
+            isActive: {
+                type: Sequelize.BOOLEAN,
+                allowNull: false,
+                defaultValue: true
             }
         });
 

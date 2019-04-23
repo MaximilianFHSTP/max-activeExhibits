@@ -66,11 +66,24 @@ export class OdController {
     }
 
     public findAllUsers(): any {
-        return this.database.user.findAll().then((users) => {
+        return this.database.user.findAll({where: {isActive: true}}).then((users) => {
             return users;
         }).catch((err) => {
             return "Failed";
         });
+    }
+
+    public updateUsersAsInactive(users): void
+    {
+        for(let u of users)
+        {
+            this.database.user.update({isActive: false}, {where: {id: u.id}});
+        }
+    }
+
+    public updateUserAsInactive(userId): void
+    {
+        this.database.user.update({isActive: false}, {where: {id: userId}});
     }
 
     public findUser(id: Number): any {

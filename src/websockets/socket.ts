@@ -72,8 +72,8 @@ export class WebSocket
                 this.odSocket.emit('getQuestionResult', data);
             });
 
-            
-            socket.on('sendAnswer', (data) => 
+
+            socket.on('sendAnswer', (data) =>
             {
                 socket.broadcast.emit('getAnswerResult', data);
             });
@@ -136,17 +136,14 @@ export class WebSocket
 
             socket.on('closeConnection', (user) =>
             {
-                //console.log(user);
-                // this.odController.removeUser(user.id).then( (result) =>
-                // {
-                    const result = "SUCCESS";
-                    socket.emit('closeConnectionResult', result);
+                this.odController.updateUserAsInactive(user.id);
+                const result = "SUCCESS";
+                socket.emit('closeConnectionResult', result);
 
-                    this.odController.requestData().then( (values) =>
-                    {
-                        socket.to(this.tableClientSocket).emit('requestDataResult', values);
-                    });
-                //});
+                this.odController.requestData().then( (values) =>
+                {
+                    socket.to(this.tableClientSocket).emit('requestDataResult', values);
+                });
             });
 
             socket.on('kickUser', (userId) =>
@@ -198,22 +195,30 @@ export class WebSocket
     {
         const ifaces = os.networkInterfaces();
 
-        let address;
+        let address = undefined;
 
-        Object.keys(ifaces).forEach(function (ifname) {
-            ifaces[ifname].forEach(function (iface) {
-              if ('IPv4' !== iface.family || iface.internal !== false) {
+        Object.keys(ifaces).forEach(function (ifname)
+        {
+            ifaces[ifname].forEach(function (iface)
+            {
                 // skip over internal (i.e. 127.0.0.1) and non-ipv4 addresses
-                return;
-              }
-            
-              address = iface.address;
-
+                if ('IPv4' === iface.family && iface.internal === false && process.env.IP_ADDRESS === iface.address)
+                    address = iface.address;
             });
-          });
-        // address = 'localhost';
-        console.log('IP-Adresse: ' + address);
-        this.godSocket.emit('loginExhibit', address);
+        });
+
+        if(process.env.BYPASS_IP_ADDRESS)
+        {
+            console.log('Bypass-IP-Adresse: ' + process.env.BYPASS_IP_ADDRESS);
+            this.godSocket.emit('loginExhibit', process.env.BYPASS_IP_ADDRESS);
+            return;
+        }
+
+        if(address)
+        {
+            console.log('IP-Adresse: ' + address);
+            this.godSocket.emit('loginExhibit', address);
+        }
     }
 
     private startUserStatusIntervall(): void
@@ -237,6 +242,7 @@ export class WebSocket
                     if(deleteUsers.length > 0)
                     {
                         this.godSocket.emit('disconnectUsers', deleteUsers);
+                        this.odController.updateUsersAsInactive(deleteUsers);
                     }
                 }
 
