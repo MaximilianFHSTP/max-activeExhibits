@@ -241,7 +241,7 @@ export class WebSocket
 
                     if(deleteUsers.length > 0)
                     {
-                        this.godSocket.emit('disconnectUsers', deleteUsers);
+                        this.godSocket.emit('disconnectUsers', {users: deleteUsers, location: this.store.location});
                         this.odController.updateUsersAsInactive(deleteUsers);
                     }
                 }
