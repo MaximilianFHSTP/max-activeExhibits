@@ -12,13 +12,13 @@ export class GuestlistController {
     public getGuestListData(): any{
         return this.database.user.findAll({
             where: {correctAnswerCounter: {[Op.between]: [7,12]}},
-            limit: 6,
+            limit: 8,
             order: [['updatedAt', 'DESC']]
         }).then((users) => {
             this.buergertum = users;
             return this.database.user.findAll({
                 where: {correctAnswerCounter: {[Op.gt]: 12}},
-                limit: 8,
+                limit: 6,
                 order: [['updatedAt', 'DESC']]
             }).then((users) => {
                 const guestlistUsers = {adel: users, buergertum: this.buergertum};
