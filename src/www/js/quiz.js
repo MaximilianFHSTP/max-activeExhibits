@@ -83,7 +83,7 @@ function createProgressbar(id, duration, pause, callback) {
         progressbar.className = 'progressbar';
     } else {
         progressbar.className = 'progressbarhidden';
-        durationTime = '30s';
+        durationTime = '25s';
     }
 
     var progressbarinner = document.createElement('div');
@@ -118,7 +118,7 @@ addEventListener('load', function () {
 
     socket.emit('getNextQuestion');
     updateAnswerSums();
-    createProgressbar('progressbar', '30s', isInPause, function () {
+    createProgressbar('progressbar', '25s', isInPause, function () {
         isInPause = !isInPause;
         changeQuestionAndRestartTimer();
     });
@@ -127,7 +127,7 @@ addEventListener('load', function () {
 function changeQuestionAndRestartTimer() {
     //updateQuestions();
     document.getElementById('timerbar').remove();
-    createProgressbar('progressbar', '30s', isInPause, function () {
+    createProgressbar('progressbar', '25s', isInPause, function () {
         isInPause = !isInPause;
         if (!isInPause) {
             answersCollectedArrayA = [];

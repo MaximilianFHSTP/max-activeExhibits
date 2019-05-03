@@ -1,4 +1,5 @@
 import {Connection} from '../database';
+import {Op} from 'sequelize';
 
 export class QuizController {
     private _database: Connection;
@@ -106,5 +107,34 @@ export class QuizController {
         }).catch(err => {
             console.log(err);
         });;
+    }
+
+    public setUserNotAnswered(data){
+        return this._database.user.findAll({where: {isActive: true}}).then((users) => {
+            for(let u of users)
+            {
+                const dateToCompare = (Date.now()-30000);
+                this._database.useranswer.findOne({
+                    where: {userId: u.id,
+                    createdAt: {[Op.gt]: dateToCompare}},
+                }).then(uanswer =>
+                {
+                    console.log(uanswer.id);
+                    console.log( u.name + " answered");
+                }).catch((err) => {
+                    console.log("No Answer " + u.name);
+                    this._database.useranswer.create({
+                        answertime: 30000,
+                        timestamp: Date.now(),
+                        userId: u.id,
+                        questionId: data.questionId,
+                        correctAnswer: null
+                    });
+                });
+                
+            }
+        }).catch((err) => {
+            return "Failed";
+        });
     }
 }

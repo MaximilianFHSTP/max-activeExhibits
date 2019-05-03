@@ -55,7 +55,7 @@ export class WebSocket
                 {
                     socket.emit('getNextQuestionResult', question);
                     this.guestlistController.getGuestListData().then( users =>{
-                        console.log('quiz', users);
+                        //console.log('quiz', users);
                         socket.to(this.guestlistSocket).emit('getGuestlistData', users);
                     });
                 });
@@ -109,6 +109,7 @@ export class WebSocket
             {
                 this.quizController.updateAnsweredQuestion(data).then((question) =>
                 {
+                    this.quizController.setUserNotAnswered(data);
                     socket.emit('updateAnsweredQuestionsResult', question);
                 });
             });
