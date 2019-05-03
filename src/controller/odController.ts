@@ -26,7 +26,15 @@ export class OdController {
         }).spread((user, created) =>
         {
             if(user)
+            {
+                if(!created)
+                {
+                    user.isActive = true;
+                    user.save();
+                }
                 return "SUCCESS";
+            }
+
 
             else
                 throw Error("Failed to create or find user");
