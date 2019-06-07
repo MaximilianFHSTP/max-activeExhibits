@@ -83,7 +83,7 @@ function createProgressbar(id, duration, pause, callback) {
         progressbar.className = 'progressbar';
     } else {
         progressbar.className = 'progressbarhidden';
-        durationTime = '25s';
+        durationTime = '15s';
     }
 
     var progressbarinner = document.createElement('div');
