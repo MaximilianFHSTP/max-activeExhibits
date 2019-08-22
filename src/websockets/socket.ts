@@ -1,4 +1,5 @@
 import * as IO from 'socket.io';
+import * as LogTypes from '../config/logTypes';
 import * as IOClient from 'socket.io-client';
 import  { Store } from '../database';
 import { TouchController } from "../controller";
@@ -87,6 +88,7 @@ export class WebSocket
             {
                 const location = (data.device === 'left') ? this.touchController.getLeftLocationId() : this.touchController.getRightLocationId();
                 this.godSocket.emit('updateSeat', {location});
+                this.godSocket.emit('addExhibitLogEntry', {locationId: location, comment: 'localUser', userId: null, type: LogTypes.EXHIBIT_LOCAL_USER_JOINED});
             });
 
             /**
@@ -98,6 +100,7 @@ export class WebSocket
                 const location = (data.device === 'left') ? this.touchController.getLeftLocationId() : this.touchController.getRightLocationId();
                 const parentLocation = this.touchController.getLocationId();
                 this.godSocket.emit('exhibitDisconnectedFromExhibit', {location, parentLocation, user: 'localUser'});
+                this.godSocket.emit('addExhibitLogEntry', {locationId: location, comment: 'localUser', userId: null, type: LogTypes.EXHIBIT_LOCAL_USER_LEFT});
             });
 
             /**
@@ -112,13 +115,14 @@ export class WebSocket
                 const user = (data.device === 'left') ? this.touchController.getLeftUserId() : this.touchController.getRightUserId();
                 const parentLocation = this.touchController.getLocationId();
                 this.godSocket.emit('exhibitDisconnectedFromExhibit', {location, parentLocation, user});
+                this.godSocket.emit('addExhibitLogEntry', {locationId: location, comment: null, userId: user, type: LogTypes.EXHIBIT_GOD_USER_LEFT})
             });
 
             socket.on('unlockCoaMantle', (data) =>
             {
                 // find special person
-                console.log('special person found')
-                console.log(data)
+                console.log('special person found');
+                console.log(data);
                 const userId = (data.device === 'left') ? this.touchController.getLeftUserId() : this.touchController.getRightUserId();
                 const coaId = process.env.UNLOCK_COA_MANTLE_ID;
 
@@ -160,6 +164,8 @@ export class WebSocket
             const isLeft = this.touchController.isLeftLocation(result.location.id);
             this.touchController.updateTouchUser(result.location, result.user);
 
+            this.godSocket.emit('addExhibitLogEntry', {locationId: result.location.id, comment: null, userId: result.user.id, type: LogTypes.EXHIBIT_GOD_USER_JOINED});
+
             if(isLeft && this.touchLeftSocket)
                 this.touchLeftSocket.emit('userJoined', result.user);
 
@@ -174,7 +180,10 @@ export class WebSocket
         this.godSocket.on('odLeft', (result) =>
         {
             const isLeft = this.touchController.isLeftLocation(result.location.id);
+            const user = (isLeft) ? this.touchController.getLeftUserId() : this.touchController.getRightUserId();
             this.touchController.deleteTouchUser(result.location);
+
+            this.godSocket.emit('addExhibitLogEntry', {locationId: result.location.id, comment: null, userId: user, type: LogTypes.EXHIBIT_GOD_USER_LEFT});
 
             if(isLeft && this.touchLeftSocket)
                 this.touchLeftSocket.emit('userLeft');
