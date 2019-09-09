@@ -66,6 +66,7 @@ d3.json('data/genealogy-data.json', function (data) {
       // waiting for websocket call from client with side and personid
       var side = 'left'
       var personId = 1
+      var transitionDuration = 3000
 
       socket.on('updateProjection', function (data) {
         console.log('data in')
@@ -123,8 +124,12 @@ d3.json('data/genealogy-data.json', function (data) {
         }
 
         // remove everything which is in the divs
-        myDiv.selectAll('*').remove()
-        myConnection.selectAll('*').remove()
+        myDiv.selectAll('*')
+          .style('opacity', 1).transition().duration(transitionDuration).style('opacity', 0)
+          .remove()
+        myConnection.selectAll('*')
+          .style('opacity', 1).transition().duration(transitionDuration).style('opacity', 0)
+          .remove()
 
         switch (printedRelative.relation) {
           case 'father':
@@ -141,6 +146,7 @@ d3.json('data/genealogy-data.json', function (data) {
                     .attr('class', 'liane')
                     .style('top', myPositions.y + 0 + 'px')
                     .style('left', myPositions.x + marginLeft - 245 + 'px')
+                    .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
                   break
                 case 2:
                   // Richardis
@@ -151,6 +157,7 @@ d3.json('data/genealogy-data.json', function (data) {
                     .attr('class', 'liane')
                     .style('top', myPositions.y - 10 + 'px')
                     .style('left', myPositions.x + marginLeft - 235 + 'px')
+                    .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
                   break
                 case 3:
                   // Friedrich I.
@@ -161,6 +168,7 @@ d3.json('data/genealogy-data.json', function (data) {
                     .attr('class', 'liane')
                     .style('top', myPositions.y - 120 + 'px')
                     .style('left', myPositions.x + marginLeft - 250 + 'px')
+                    .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
                   break
                 case 4:
                   // Agnes
@@ -171,6 +179,7 @@ d3.json('data/genealogy-data.json', function (data) {
                     .attr('class', 'liane')
                     .style('top', myPositions.y - 330 + 'px')
                     .style('left', myPositions.x + marginLeft - 245 + 'px')
+                    .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
                   break
               }
             } else {
@@ -185,6 +194,7 @@ d3.json('data/genealogy-data.json', function (data) {
                     .attr('class', 'liane')
                     .style('top', myPositions.y - 0 + 'px')
                     .style('left', myPositions.x + marginLeft - 60 + 'px')
+                    .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
                   break
                 case 2:
                   // Richardis
@@ -194,6 +204,7 @@ d3.json('data/genealogy-data.json', function (data) {
                     .attr('class', 'liane')
                     .style('top', myPositions.y - 10 + 'px')
                     .style('left', myPositions.x + marginLeft - 60 + 'px')
+                    .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
                   break
                 case 3:
                   // Friedrich I.
@@ -204,6 +215,7 @@ d3.json('data/genealogy-data.json', function (data) {
                     .attr('class', 'liane')
                     .style('top', myPositions.y - 113 + 'px')
                     .style('left', myPositions.x + marginLeft - 55 + 'px')
+                    .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
                   break
                 case 4:
                   // Agnes
@@ -215,6 +227,7 @@ d3.json('data/genealogy-data.json', function (data) {
                     .attr('class', 'liane')
                     .style('top', myPositions.y - 326 + 'px')
                     .style('left', myPositions.x + marginLeft - 50 + 'px')
+                    .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
                   break
               }
             }
@@ -232,12 +245,13 @@ d3.json('data/genealogy-data.json', function (data) {
                     case 1:
                       // Leopold III. left
                       myPositions = printedPosLeft[printedRelative.position - 1]
-                      
+
                       myConnection.append('img')
                         .attr('src', '/img/connection/left/left1.png')
                         .attr('class', 'liane')
                         .style('top', myPositions.y + 0 + 'px')
                         .style('left', myPositions.x + marginLeft - 61 + 'px')
+                        .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
                       break
                     case 2:
                       // Heinrich II.
@@ -248,6 +262,7 @@ d3.json('data/genealogy-data.json', function (data) {
                         .attr('class', 'liane')
                         .style('top', myPositions.y - 10 + 'px')
                         .style('left', myPositions.x + marginLeft - 61 + 'px')
+                        .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
                       break
                     case 3:
                       // Leopold V
@@ -259,6 +274,7 @@ d3.json('data/genealogy-data.json', function (data) {
                         .attr('class', 'liane')
                         .style('top', myPositions.y - 30 + 'px')
                         .style('left', myPositions.x + marginLeft - 61 + 'px')
+                        .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
                       break
                     case 4:
                       // Leopold VI.
@@ -269,6 +285,7 @@ d3.json('data/genealogy-data.json', function (data) {
                         .attr('class', 'liane')
                         .style('top', myPositions.y - 250 + 'px')
                         .style('left', myPositions.x + marginLeft - 57 + 'px')
+                        .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
                       break
                     case 5:
                       // Friedrich II.
@@ -279,6 +296,7 @@ d3.json('data/genealogy-data.json', function (data) {
                         .attr('class', 'liane')
                         .style('top', myPositions.y - 450 + 'px')
                         .style('left', myPositions.x + marginLeft - 52 + 'px')
+                        .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
                       break
                   }
 
@@ -295,6 +313,7 @@ d3.json('data/genealogy-data.json', function (data) {
                         .attr('class', 'liane')
                         .style('top', myPositions.y + 10 + 'px')
                         .style('left', myPositions.x + marginLeft - 83 + 'px')
+                        .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
                       break
                     case 2:
                       // Gertrud
@@ -304,7 +323,8 @@ d3.json('data/genealogy-data.json', function (data) {
                         .attr('src', '/img/connection/right/right2.png')
                         .attr('class', 'liane')
                         .style('top', myPositions.y + 0 + 'px')
-                        .style('left', myPositions.x + marginLeft -83 + 'px')
+                        .style('left', myPositions.x + marginLeft - 83 + 'px')
+                        .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
                       break
                     case 3:
                       // Helena
@@ -315,6 +335,7 @@ d3.json('data/genealogy-data.json', function (data) {
                         .attr('class', 'liane')
                         .style('top', myPositions.y - 10 + 'px')
                         .style('left', myPositions.x + marginLeft - 78 + 'px')
+                        .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
                       break
                     case 4:
                       // Theodora
@@ -325,6 +346,7 @@ d3.json('data/genealogy-data.json', function (data) {
                         .attr('class', 'liane')
                         .style('top', myPositions.y - 240 + 'px')
                         .style('left', myPositions.x + marginLeft - 80 + 'px')
+                        .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
                       break
                     case 5:
                       // Eudokia
@@ -335,6 +357,7 @@ d3.json('data/genealogy-data.json', function (data) {
                         .attr('class', 'liane')
                         .style('top', myPositions.y - 440 + 'px')
                         .style('left', myPositions.x + marginLeft - 80 + 'px')
+                        .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
                       break
                   }
                   break
@@ -347,7 +370,7 @@ d3.json('data/genealogy-data.json', function (data) {
                   console.log('show connection on left side')
                   switch (printedRelative.position) {
                     case 1:
-                      // Agnes 
+                      // Agnes
                       myPositions = printedPosLeftOther[printedRelative.position - 1]
 
                       myConnection.append('img')
@@ -355,16 +378,18 @@ d3.json('data/genealogy-data.json', function (data) {
                         .attr('class', 'liane')
                         .style('top', myPositions.y - 15 + 'px')
                         .style('left', myPositions.x + marginLeft - 380 + 'px')
+                        .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
                       break
                     case 2:
                       // Gertrud
                       myPositions = printedPosLeftOther[printedRelative.position - 1]
 
                       myConnection.append('img')
-                      .attr('src', '/img/connection/left_opposite/left_opposite2.png')
-                      .attr('class', 'liane')
-                      .style('top', myPositions.y - 20 + 'px')
-                      .style('left', myPositions.x + marginLeft - 380 + 'px')
+                        .attr('src', '/img/connection/left_opposite/left_opposite2.png')
+                        .attr('class', 'liane')
+                        .style('top', myPositions.y - 20 + 'px')
+                        .style('left', myPositions.x + marginLeft - 380 + 'px')
+                        .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
                       break
                     case 3:
                       // Helena
@@ -375,6 +400,7 @@ d3.json('data/genealogy-data.json', function (data) {
                         .attr('class', 'liane')
                         .style('top', myPositions.y - 90 + 'px')
                         .style('left', myPositions.x + marginLeft - 380 + 'px')
+                        .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
                       break
                     case 4:
                       // Theodora
@@ -385,6 +411,7 @@ d3.json('data/genealogy-data.json', function (data) {
                         .attr('class', 'liane')
                         .style('top', myPositions.y - 315 + 'px')
                         .style('left', myPositions.x + marginLeft - 380 + 'px')
+                        .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
                       break
                     case 5:
                       // Eudokia
@@ -395,6 +422,7 @@ d3.json('data/genealogy-data.json', function (data) {
                         .attr('class', 'liane')
                         .style('top', myPositions.y - 366 + 'px')
                         .style('left', myPositions.x + marginLeft - 380 + 'px')
+                        .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
                       break
                   }
                   break
@@ -410,26 +438,28 @@ d3.json('data/genealogy-data.json', function (data) {
                         .attr('class', 'liane')
                         .style('top', myPositions.y - 5 + 'px')
                         .style('left', myPositions.x + marginLeft - 2 + 'px')
+                        .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
                       break
                     case 2:
                       myPositions = printedPosRightOther[printedRelative.position - 1]
 
-                      // Heinrich II. 
+                      // Heinrich II.
                       myConnection.append('img')
                         .attr('src', '/img/connection/right_opposite/right_opposite2.png')
                         .attr('class', 'liane')
                         .style('top', myPositions.y - 5 + 'px')
                         .style('left', myPositions.x + marginLeft + 0 + 'px')
+                        .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
                       break
                     case 3:
                       // Leopold V.
                       myPositions = printedPosRightOther[printedRelative.position - 1]
-
                       myConnection.append('img')
                         .attr('src', '/img/connection/right_opposite/right_opposite3.png')
                         .attr('class', 'liane')
                         .style('top', myPositions.y - 60 + 'px')
                         .style('left', myPositions.x + marginLeft + 0 + 'px')
+                        .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
                       break
                     case 4:
                     // Leopold VI.
@@ -440,6 +470,7 @@ d3.json('data/genealogy-data.json', function (data) {
                         .attr('class', 'liane')
                         .style('top', myPositions.y - 295 + 'px')
                         .style('left', myPositions.x + marginLeft + 10 + 'px')
+                        .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
                       break
                     case 5:
                       // Friedrich II.
@@ -450,6 +481,7 @@ d3.json('data/genealogy-data.json', function (data) {
                         .attr('class', 'liane')
                         .style('top', myPositions.y - 350 + 'px')
                         .style('left', myPositions.x + marginLeft + 0 + 'px')
+                        .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
                       break
                   }
                   break
@@ -463,36 +495,48 @@ d3.json('data/genealogy-data.json', function (data) {
         var info = myDiv.append('div').attr('class', 'info ' + whichSide)
         var children = myDiv.append('div').attr('class', 'children')
 
-        var infoDiv = info.append('div').attr('class', 'banner')
+        var infoDiv = info.append('div')
+
+        infoDiv.attr('class', 'banner')
+          .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
+
         infoDiv.append('h1').text(myPerson.name)
+          .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
 
         var bornDiv = infoDiv.append('div')
         bornDiv.append('img').attr('src', 'img/icon/star.svg').attr('class', 'born')
+          .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
         bornDiv.append('p').text(getTimeString(myPerson, 'born'))
+          .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
 
         var diedDiv = infoDiv.append('div')
         diedDiv.append('img').attr('src', 'img/icon/cross.svg').attr('class', 'died')
+          .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
         diedDiv.append('p').text(getTimeString(myPerson, 'died'))
+          .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
 
         info.append('img').attr('src', '/img/' + myPerson.img + '.png')
+          .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
         info.append('img')
           .attr('src', '/img/connection/circle-flower-p.png')
           .attr('class', 'circle')
-
+          .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
 
         // if death until 1156 than map1156, if death > 1156 than map1246
         // side left or right
         var mapToShow
-        if(myPerson.died <= 1156){
+        if (myPerson.died <= 1156) {
           mapToShow = 'map1156'
-        }else{
+        } else {
           mapToShow = 'map1246'
         }
 
         map.append('h1').text('Politischer Machtbereich der Babenberger | Political power of the Babenberg')
+          .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
         map.append('img')
-          .attr('src', '/img/maps/'+mapToShow+whichSide+'.png') // todo add side
+          .attr('src', '/img/maps/' + mapToShow + whichSide + '.png') // todo add side
           .attr('class', 'mapimg')
+          .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
 
         showRelations(children, myPerson, whichSide)
       }
@@ -563,7 +607,9 @@ d3.json('data/genealogy-data.json', function (data) {
         var div = children.append('div').attr('class', 'template' + childItem.template)
         if (typeof childItem.spouse !== 'undefined') {
           childItem.spouse.forEach((spouse, index) => {
-            var divRelation = div.append('div').attr('class', 'relation relation' + (index + 1))
+            var divRelation = div.append('div')
+            divRelation.attr('class', 'relation relation' + (index + 1))
+              .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
 
             var spouseImg, spouseName
             if (spouse.id === 0) {
@@ -580,10 +626,12 @@ d3.json('data/genealogy-data.json', function (data) {
               divSpouse.append('img')
                 .attr('src', '/img/connection/marriage-left.png')
                 .attr('class', 'marriage')
+                .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
             } else {
               divSpouse.append('img')
                 .attr('src', '/img/connection/marriage.png')
                 .attr('class', 'marriage')
+                .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
             }
 
             divSpouse.append('img')
@@ -591,16 +639,21 @@ d3.json('data/genealogy-data.json', function (data) {
                 return 'img/' + spouseImg + '.png'
               })
               .attr('class', 'spouse spouse' + (index + 1))
+              .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
             divSpouse.append('img')
               .attr('src', '/img/connection/circle-1.png')
               .attr('class', 'circle')
+              .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
             divSpouse.append('h2')
               .text(spouseName)
+              .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
 
             if (typeof spouse.children !== 'undefined') {
               var childappend = divRelation
-              if(childItem.template == 8 || childItem.template == 7 || childItem.template == 6 || childItem.template == 5){
-                childappend = divRelation.append('div').attr('class', 'children'+childItem.template)
+              if (childItem.template === 8 || childItem.template === 7 || childItem.template === 6 || childItem.template === 5) {
+                childappend = divRelation.append('div')
+                childappend.attr('class', 'children' + childItem.template)
+                  .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
               }
 
               spouse.children.forEach((child, index) => {
@@ -614,27 +667,33 @@ d3.json('data/genealogy-data.json', function (data) {
                   childImg = myPerson.img
                   childName = myPerson.name
                 }
-              
+
                 var divChild = childappend.append('div').attr('class', 'child')
                 divChild.append('img')
                   .attr('src', function () {
                     return 'img/' + childImg + '.png'
                   })
                   .attr('class', 'child child' + (index + 1))
+                  .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
+
                 divChild.append('img')
                   .attr('src', '/img/connection/circle-2.png')
                   .attr('class', 'circle')
+                  .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
                 divChild.append('h2')
                   .text(childName)
+                  .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
               })
             } else {
               divSpouse.append('p')
                 .text('keine Kinder | no children')
+                .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
             }
           })
         } else {
           div.append('p')
             .text('nicht verheiratet, keine Kinder | not married, no children')
+            .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
         }
       }
     })
