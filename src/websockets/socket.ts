@@ -81,6 +81,28 @@ export class WebSocket
             });
 
             /**
+             * call to send start screen to the projection
+             * data {device: ['left' / 'right']}
+             */
+            socket.on('showStartscreen', (data) =>
+            {
+                if(this.touchLeftSocket && this.touchLeftSocket.id === socket.id)
+                    data.device = 'left';
+
+                else if(this.touchRightSocket && this.touchRightSocket.id === socket.id)
+                    data.device = 'right';
+
+                if(data.device === null || data.device === undefined) return;
+
+                console.log("show start screen");
+                console.log(data);
+                if(this.projectionSocket){
+                    this.projectionSocket.emit('showStartscreen',data);
+                }
+
+            });
+
+            /**
              * Call if a local user (no OD) started to explore the exhibit
              * data {device: ['left' / 'right']}
              */
