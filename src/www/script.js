@@ -85,19 +85,25 @@ d3.json('data/genealogy-data.json', function (data) {
 
       function showStart (whichSide) {
         var myDiv
+        var myConnection
 
         switch (whichSide) {
           case 'left':
             console.log('left')
             myDiv = d3.select('#userLeft')
+            myConnection = d3.select('#relativeLeft')
             break
           default:
             console.log('right')
             myDiv = d3.select('#userRight')
+            myConnection = d3.select('#relativeRight')
             break
         }
 
         myDiv.selectAll('*')
+          .style('opacity', 1).transition().duration(transitionDuration).style('opacity', 0)
+          .remove()
+        myConnection.selectAll('*')
           .style('opacity', 1).transition().duration(transitionDuration).style('opacity', 0)
           .remove()
 
