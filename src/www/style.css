@@ -48,10 +48,12 @@ p {
     width: 428px;
 }
 
-#userLeft, #userRight{
+#userLeft, #userRight, #startLeft, #startRight{
     position: absolute;
     /*z-index: 100;*/
 }
+
+
 
 .map{
     height: 385px;

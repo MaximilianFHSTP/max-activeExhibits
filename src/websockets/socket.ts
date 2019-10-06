@@ -123,13 +123,6 @@ export class WebSocket
                 const parentLocation = this.touchController.getLocationId();
                 this.godSocket.emit('exhibitDisconnectedFromExhibit', {location, parentLocation, user: 'localUser'});
                 this.godSocket.emit('addExhibitLogEntry', {locationId: location, comment: 'localUser', userId: null, type: LogTypes.EXHIBIT_LOCAL_USER_LEFT});
-
-                // Show start screen
-                console.log("start screen projection");
-                console.log(data);
-                if(this.projectionSocket){
-                    this.projectionSocket.emit('showStartscreen',data);
-                }
             });
 
             /**
@@ -145,13 +138,6 @@ export class WebSocket
                 const parentLocation = this.touchController.getLocationId();
                 this.godSocket.emit('exhibitDisconnectedFromExhibit', {location, parentLocation, user});
                 this.godSocket.emit('addExhibitLogEntry', {locationId: location, comment: null, userId: user, type: LogTypes.EXHIBIT_GOD_USER_LEFT})
-
-                // Show start screen
-                console.log("start screen projection");
-                console.log(data);
-                if(this.projectionSocket){
-                    this.projectionSocket.emit('showStartscreen',data);
-                }
             });
 
             socket.on('unlockCoaMantle', (data) =>

@@ -85,17 +85,20 @@ d3.json('data/genealogy-data.json', function (data) {
 
       function showStart (whichSide) {
         var myDiv
+        var myStartBox
         var myConnection
 
         switch (whichSide) {
           case 'left':
             console.log('left')
             myDiv = d3.select('#userLeft')
+            myStartBox = d3.select('#startLeft')
             myConnection = d3.select('#relativeLeft')
             break
           default:
             console.log('right')
             myDiv = d3.select('#userRight')
+            myStartBox = d3.select('#startRight')
             myConnection = d3.select('#relativeRight')
             break
         }
@@ -106,8 +109,11 @@ d3.json('data/genealogy-data.json', function (data) {
         myConnection.selectAll('*')
           .style('opacity', 1).transition().duration(transitionDuration).style('opacity', 0)
           .remove()
+        myStartBox.selectAll('*')
+          .style('opacity', 1).transition().duration(transitionDuration).style('opacity', 0)
+          .remove()
 
-        var startScreen = myDiv.append('div').attr('class', 'start')
+        var startScreen = myStartBox.append('div').attr('class', 'start')
 
         startScreen.append('h1').text('Stammbaum der Babenberger')
           .style('opacity', 0).transition().duration(transitionDuration).style('opacity', 1)
@@ -165,16 +171,19 @@ d3.json('data/genealogy-data.json', function (data) {
         var myDiv
         var myConnection
         var myPositions
+        var myStartBox
 
         switch (whichSide) {
           case 'left':
             console.log('left')
             myDiv = d3.select('#userLeft')
+            myStartBox = d3.select('#startLeft')
             myConnection = d3.select('#relativeLeft')
             break
           default:
             console.log('right')
             myDiv = d3.select('#userRight')
+            myStartBox = d3.select('#startRight')
             myConnection = d3.select('#relativeRight')
             break
         }
@@ -184,6 +193,9 @@ d3.json('data/genealogy-data.json', function (data) {
           .style('opacity', 1).transition().duration(transitionDuration).style('opacity', 0)
           .remove()
         myConnection.selectAll('*')
+          .style('opacity', 1).transition().duration(transitionDuration).style('opacity', 0)
+          .remove()
+        myStartBox.selectAll('*')
           .style('opacity', 1).transition().duration(transitionDuration).style('opacity', 0)
           .remove()
 
